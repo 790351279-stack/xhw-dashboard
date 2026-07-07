@@ -72,6 +72,7 @@ tr:hover{background:#f8faff}
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('ly')">履约率看板</button>
   <button class="tab-btn" onclick="switchTab('my')">十分满意率看板</button>
+  <button class="tab-btn" onclick="switchTab('cf')">重复故障看板</button>
 </div>
 
 <div id="tab-ly" class="tab-content active">
@@ -82,6 +83,11 @@ tr:hover{background:#f8faff}
 <div id="tab-my" class="tab-content">
   <div class="summary" id="sum-my"></div>
   <div id="teams-my"></div>
+</div>
+
+<div id="tab-cf" class="tab-content">
+  <div class="summary" id="sum-cf"></div>
+  <div id="teams-cf"></div>
 </div>
 
 <script>
@@ -499,6 +505,97 @@ function calcPerson(name) {
       html += `</tbody></table>`;
     }
     html += `</div>`; box.innerHTML += html;
+  });
+})();
+
+// ===================== 重复故障看板 =====================
+// 7月重复故障数据（90天内重复报障，按第一次报障时责任人归责）
+const CF_DATA = [
+  {date:'07-01', account:'07459654071', firstPerson:'石翔', allPersons:'石翔, 姚茂培', team:'城区装维', addr:'新民村村委会', reason:'用户自购设备/终端故障', firstDate:'06-10', repeatCount:2},
+  {date:'07-01', account:'18166241518', firstPerson:'杨斌', allPersons:'杨斌, 杨轶杰', team:'凉伞农村装维', addr:'贡溪村村委会', reason:'其它', firstDate:'06-18', repeatCount:2},
+  {date:'07-02', account:'074500001081966', firstPerson:'姚茂培', allPersons:'姚茂培, 杨斌, 胡明', team:'城区装维', addr:'光辉村/偏洞村', reason:'其它', firstDate:'03-08', repeatCount:3},
+  {date:'07-02', account:'074500001090186', firstPerson:'杨斌', allPersons:'杨斌, 秦美琼', team:'凉伞农村装维', addr:'桓胆村村委会', reason:'皮纤线路断/光衰大', firstDate:'04-21', repeatCount:2},
+  {date:'07-02', account:'07459426127', firstPerson:'廖中山', allPersons:'廖中山, 姚茂培', team:'城区装维', addr:'晃山新城', reason:'光猫硬件故障（含电源）', firstDate:'06-06', repeatCount:2},
+  {date:'07-02', account:'074500000068005', firstPerson:'姚茂培', allPersons:'姚茂培, 杨轶杰', team:'城区装维', addr:'克寨村村委会', reason:'其它', firstDate:'04-06', repeatCount:2},
+  {date:'07-03', account:'07459069968', firstPerson:'杨斌', allPersons:'杨斌, 杨轶杰', team:'凉伞农村装维', addr:'贡溪村村委会', reason:'其它', firstDate:'06-13', repeatCount:2},
+  {date:'07-03', account:'07459904804', firstPerson:'廖中山', allPersons:'廖中山, 姚茂培', team:'城区装维', addr:'梅林春天4-22栋', reason:'皮纤线路断/光衰大', firstDate:'06-20', repeatCount:2},
+  {date:'07-04', account:'074500000242447', firstPerson:'向万强', allPersons:'向万强, 向万强', team:'城区装维', addr:'塘湾路/柏树林村', reason:'其它', firstDate:'05-06', repeatCount:2},
+  {date:'07-06', account:'HH007981404002@VOD', firstPerson:'杨世增', allPersons:'杨世增, 杨轶杰', team:'凉伞农村装维', addr:'-', reason:'LAN口插错/光猫硬件故障', firstDate:'06-24', repeatCount:4},
+  {date:'07-06', account:'18075577591', firstPerson:'江英平', allPersons:'江英平', team:'城区装维', addr:'长滩村村委会', reason:'皮纤线路断/光衰大', firstDate:'05-28', repeatCount:1},
+];
+
+(function buildCF() {
+  // 按班组分组
+  const teamGroups = {};
+  const personCount = {};
+  CF_DATA.forEach(d => {
+    if (!teamGroups[d.team]) teamGroups[d.team] = [];
+    teamGroups[d.team].push(d);
+    personCount[d.firstPerson] = (personCount[d.firstPerson] || 0) + 1;
+  });
+
+  // 汇总卡片
+  const totalCases = CF_DATA.length;
+  const totalRepeat = CF_DATA.reduce((s, d) => s + d.repeatCount, 0);
+  const persons = Object.keys(personCount);
+  const topPerson = persons.sort((a, b) => personCount[b] - personCount[a])[0];
+  const topCount = personCount[topPerson];
+
+  document.getElementById('sum-cf').innerHTML = `
+    <div class="s-card red"><div class="lb">重复故障数</div><div class="vl">${totalCases}<span style="font-size:13px;color:#999">条</span></div></div>
+    <div class="s-card orange"><div class="lb">涉及总工单</div><div class="vl">${totalRepeat}<span style="font-size:13px;color:#999">单</span></div></div>
+    <div class="s-card blue"><div class="lb">涉及责任人</div><div class="vl">${persons.length}<span style="font-size:13px;color:#999">人</span></div></div>
+    <div class="s-card gray"><div class="lb">最多重复</div><div class="vl" style="font-size:18px">${topPerson}<span style="font-size:13px;color:#999">(${topCount}条)</span></div></div>
+  `;
+
+  const colors = { '凉伞农村装维': 'c1', '禾滩农村装维': 'c2', '城区装维': 'c3', '支撑人员': 'c4' };
+  const box = document.getElementById('teams-cf');
+
+  // 按班组列表展示
+  Object.keys(teamGroups).sort().forEach(team => {
+    const records = teamGroups[team];
+    const c = colors[team] || 'c1';
+    // 按责任人统计
+    const teamPersonCount = {};
+    records.forEach(d => { teamPersonCount[d.firstPerson] = (teamPersonCount[d.firstPerson] || 0) + 1; });
+    const teamPersons = Object.keys(teamPersonCount).sort((a, b) => teamPersonCount[b] - teamPersonCount[a]);
+
+    let html = `<div class="team"><div class="team-hd ${c}"><h2>${team}</h2><div class="ts">`;
+    html += `重复故障<b class="red">${records.length}</b>条 | 涉及责任人<b class="red">${teamPersons.length}</b>人`;
+    html += `</div></div>`;
+
+    // 责任人汇总行
+    html += `<div style="padding:8px 16px;background:#fef7f0;border-bottom:1px solid #f0e0d0;font-size:13px">`;
+    html += `<b>责任人统计：</b>`;
+    teamPersons.forEach((p, i) => {
+      const cnt = teamPersonCount[p];
+      const cls = cnt >= 2 ? 'color:#ea4335;font-weight:bold' : 'color:#5f6368';
+      html += `${i > 0 ? ' | ' : ''}<span style="${cls}">${p}(${cnt}条)</span>`;
+    });
+    html += `</div>`;
+
+    // 明细表格
+    html += `<table><thead><tr>`;
+    html += `<th style="text-align:left;padding-left:12px">业务号码</th>`;
+    html += `<th>重障日期</th><th>首次报障日期</th><th>首次责任人</th><th>所有经手人</th><th>地址</th><th>回单原因</th><th>重复次数</th>`;
+    html += `</tr></thead><tbody>`;
+
+    records.forEach(d => {
+      const rc = d.repeatCount >= 3 ? 'warn' : d.repeatCount >= 2 ? 'orange' : '';
+      html += `<tr>`;
+      html += `<td class="nm" style="max-width:160px;overflow:hidden;text-overflow:ellipsis">${d.account}</td>`;
+      html += `<td>${d.date}</td>`;
+      html += `<td>${d.firstDate}</td>`;
+      html += `<td style="font-weight:bold;color:#ea4335">${d.firstPerson}</td>`;
+      html += `<td style="font-size:12px;color:#666">${d.allPersons}</td>`;
+      html += `<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;font-size:12px">${d.addr}</td>`;
+      html += `<td style="font-size:12px">${d.reason}</td>`;
+      html += `<td class="rt ${rc}">${d.repeatCount}</td>`;
+      html += `</tr>`;
+    });
+
+    html += `</tbody></table></div>`;
+    box.innerHTML += html;
   });
 })();
 </script>
