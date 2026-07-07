@@ -140,10 +140,13 @@ tr:hover{background:#f8faff}
         </select>
         <label>具体原因说明</label>
         <textarea id="fb-reason" placeholder="请描述重复故障的具体原因..."></textarea>
-        <label>整改措施</label>
-        <textarea id="fb-action" placeholder="请填写已采取或建议的整改措施..."></textarea>
-        <label>反馈人</label>
-        <input type="text" id="fb-author" placeholder="请输入姓名" style="width:100%;border:1px solid #ddd;border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit">
+        <label>用户是否保存装维联系方式</label>
+        <select id="fb-action">
+          <option value="">-- 请选择 --</option>
+          <option value="已保存">已保存</option>
+          <option value="未保存">未保存</option>
+          <option value="不确定">不确定</option>
+        </select>
         <button class="fb-btn" id="fb-submit" onclick="submitFeedback()">提交反馈</button>
       </div>
       <div class="fb-history" id="fb-history" style="display:none">
@@ -644,7 +647,6 @@ function openFbModal(account) {
   document.getElementById('fb-category').value = '';
   document.getElementById('fb-reason').value = '';
   document.getElementById('fb-action').value = '';
-  document.getElementById('fb-author').value = '';
   document.getElementById('fb-submit').disabled = false;
   document.getElementById('fb-submit').textContent = '提交反馈';
   // Show history
@@ -655,10 +657,11 @@ function openFbModal(account) {
     histDiv.style.display = 'block';
     histList.innerHTML = fbs.map(fb => {
       const catClass = fb.category === '网络质量' ? 'c-net' : fb.category === '用户原因' ? 'c-user' : fb.category === '设备故障' ? 'c-equip' : fb.category === '装维责任' ? '' : 'c-other';
-      return '<div class="fb-item"><div class="fb-meta">' + fb.author + ' | ' + fb.time +
+      const actCls = fb.action === '已保存' ? 'color:#34a853' : fb.action === '未保存' ? 'color:#ea4335' : 'color:#f9ab00';
+      return '<div class="fb-item"><div class="fb-meta">' + fb.time +
         '</div><span class="fb-cat ' + catClass + '">' + fb.category + '</span> ' +
         (fb.reason ? fb.reason : '') +
-        (fb.action ? '<br><b>整改：</b>' + fb.action : '') + '</div>';
+        ' | <b style="' + actCls + '">联系方式：' + fb.action + '</b></div>';
     }).join('');
   } else {
     histDiv.style.display = 'none';
@@ -674,9 +677,8 @@ function closeFbModal() {
 async function submitFeedback() {
   const cat = document.getElementById('fb-category').value;
   const reason = document.getElementById('fb-reason').value.trim();
-  const action = document.getElementById('fb-action').value.trim();
-  const author = document.getElementById('fb-author').value.trim();
-  if (!cat || !author) { alert('请填写定责分类和反馈人姓名'); return; }
+  const action = document.getElementById('fb-action').value;
+  if (!cat || !action) { alert('请填写定责分类和用户是否保存联系方式'); return; }
   const btn = document.getElementById('fb-submit');
   btn.disabled = true; btn.textContent = '提交中...';
   const fb = {
@@ -684,7 +686,6 @@ async function submitFeedback() {
     category: cat,
     reason: reason,
     action: action,
-    author: author,
     time: new Date().toLocaleString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})
   };
   const ok = await saveFeedback(fb);
@@ -782,7 +783,7 @@ function renderCfBadges() {
       html += `<td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;font-size:12px">${d.addr}</td>`;
       html += `<td style="font-size:12px">${d.reason}</td>`;
       html += `<td class="rt ${rc}">${d.repeatCount}</td>`;
-      html += `<td><span class="fb-badge" id="fb-badge-${sid}" style="${fbs.length > 0 ? 'display:inline-block' : 'display:none'}">${fbs.length}</span>${fbs.length === 0 ? '<span style="color:#1a73e8;font-size:11px">点击反馈</span>' : ''}</td>`;
+      html += `<td><span class="fb-badge" id="fb-badge-${sid}" style="${fbs.length > 0 ? 'display:inline-block' : 'display:none'}">${fbs.length}</span>${fbs.length > 0 ? '<span style="color:#34a853;font-size:11px;font-weight:bold">已反馈</span>' : '<span style="color:#1a73e8;font-size:11px">点击反馈</span>'}</td>`;
       html += `</tr>`;
     });
 
