@@ -109,41 +109,203 @@ function dlPct(v) {
 }
 
 // ===================== 履约率看板 =====================
-// 累计(1-6日) + 增量(7月6日 = 1-6日 - 1-5日)
-const LY_DATA = {
-  '凉伞农村装维': [
-    {name:'姚金发', iz:18,diz:0, ib:0,dib:0, rz:4,drz:3, rb:0,drb:0, sz:1,dsb:0, sb:0,dsz:0},
-    {name:'姚鹏',   iz:9,diz:0, ib:0,dib:0, rz:4,drz:1, rb:0,drb:0, sz:2,dsz:0, sb:0,dsb:0},
-    {name:'杨斌',   iz:4,diz:0, ib:4,dib:0, rz:7,drz:3, rb:0,drb:0, sz:4,dsz:0, sb:0,dsb:0},
-    {name:'杨世增', iz:9,diz:0, ib:2,dib:0, rz:6,drz:0, rb:0,drb:0, sz:1,dsz:0, sb:0,dsb:0},
-    {name:'杨轶杰', iz:0,diz:0, ib:0,dib:0, rz:4,drz:1, rb:0,drb:0, sz:1,dsz:1, sb:0,dsb:0},
-    {name:'吴先锋', iz:0,diz:0, ib:0,dib:0, rz:0,drz:0, rb:0,drb:0, sz:2,dsz:1, sb:0,dsb:0},
-  ],
-  '禾滩农村装维': [
-    {name:'金沛',   iz:7,diz:0, ib:0,dib:0, rz:0,drz:0, rb:0,drb:0, sz:11,dsz:0, sb:0,dsb:0},
-    {name:'吕明军', iz:8,diz:0, ib:0,dib:0, rz:0,drz:0, rb:0,drb:0, sz:2,dsz:1, sb:0,dsb:0},
-    {name:'张家智', iz:6,diz:3, ib:0,dib:0, rz:1,drz:0, rb:0,drb:0, sz:6,dsz:0, sb:0,dsb:0},
-    {name:'吴大芳', iz:2,diz:0, ib:0,dib:0, rz:5,drz:0, rb:0,drb:0, sz:0,dsz:0, sb:0,dsb:0},
-    {name:'姚李明', iz:12,diz:3, ib:0,dib:0, rz:1,drz:0, rb:0,drb:0, sz:2,dsz:0, sb:0,dsb:0},
-    {name:'何伟',   iz:0,diz:0, ib:0,dib:0, rz:0,drz:0, rb:0,drb:0, sz:0,dsz:0, sb:0,dsb:0},
-    {name:'杨光伟', iz:0,diz:0, ib:0,dib:0, rz:1,drz:0, rb:0,drb:0, sz:0,dsz:0, sb:0,dsb:0},
-  ],
-  '城区装维': [
-    {name:'江英平', iz:34,diz:0, ib:0,dib:0, rz:5,drz:1, rb:0,drb:0, sz:1,dsz:0, sb:0,dsb:0},
-    {name:'姚应波', iz:27,diz:3, ib:1,dib:0, rz:5,drz:1, rb:0,drb:0, sz:6,dsz:2, sb:0,dsb:0},
-    {name:'廖中山', iz:25,diz:7, ib:0,dib:0, rz:15,drz:2, rb:0,drb:0, sz:9,dsz:2, sb:0,dsb:0},
-    {name:'田荣',   iz:26,diz:0, ib:1,dib:0, rz:3,drz:0, rb:0,drb:0, sz:4,dsz:0, sb:0,dsb:0},
-    {name:'张道辉', iz:23,diz:2, ib:2,dib:0, rz:15,drz:3, rb:0,drb:0, sz:7,dsz:3, sb:0,dsb:0},
-    {name:'向万强', iz:19,diz:4, ib:0,dib:0, rz:8,drz:2, rb:0,drb:0, sz:9,dsz:0, sb:0,dsb:0},
-    {name:'潘思毅', iz:17,diz:2, ib:0,dib:0, rz:8,drz:0, rb:0,drb:0, sz:1,dsz:0, sb:0,dsb:0},
-    {name:'潘进',   iz:17,diz:0, ib:0,dib:0, rz:2,drz:0, rb:0,drb:0, sz:2,dsz:0, sb:0,dsb:0},
-    {name:'石翔',   iz:16,diz:2, ib:0,dib:0, rz:7,drz:2, rb:0,drb:0, sz:10,dsz:1, sb:0,dsb:0},
-    {name:'陈光林', iz:15,diz:1, ib:0,dib:0, rz:1,drz:0, rb:0,drb:0, sz:10,dsz:9, sb:0,dsb:0},
-    {name:'姚茂培', iz:0,diz:0, ib:0,dib:0, rz:4,drz:1, rb:0,drb:0, sz:4,dsz:0, sb:0,dsb:0},
-    {name:'胡明',   iz:0,diz:0, ib:0,dib:0, rz:1,drz:0, rb:0,drb:0, sz:2,dsz:0, sb:0,dsb:0},
-  ],
-  '支撑人员': {iz:2,diz:2, ib:2,dib:2, rz:2,drz:1, rb:0,drb:0, sz:0,dsz:0, sb:0,dsb:0},
+// ===================== 数据区（每次更新只改这里）=====================
+// 当前累计数据（7月1日-6日）—— 每天取数后更新此区域
+// 增量由下方PREV_SNAPSHOT自动计算，不需要手动填
+const CUR_SNAPSHOT = {
+  date: '2026-07-06', // 数据截止日期
+  ly: { // 履约率数据
+    '凉伞农村装维': [
+      {name:'姚金发',iz:18,ib:0,rz:4,rb:0,sz:1,sb:0},
+      {name:'姚鹏',iz:9,ib:0,rz:4,rb:0,sz:2,sb:0},
+      {name:'杨斌',iz:4,ib:4,rz:7,rb:0,sz:4,sb:0},
+      {name:'杨世增',iz:9,ib:2,rz:6,rb:0,sz:1,sb:0},
+      {name:'杨轶杰',iz:0,ib:0,rz:4,rb:0,sz:1,sb:0},
+      {name:'吴先锋',iz:0,ib:0,rz:0,rb:0,sz:2,sb:0},
+    ],
+    '禾滩农村装维': [
+      {name:'金沛',iz:7,ib:0,rz:0,rb:0,sz:11,sb:0},
+      {name:'吕明军',iz:8,ib:0,rz:0,rb:0,sz:2,sb:0},
+      {name:'张家智',iz:6,ib:0,rz:1,rb:0,sz:6,sb:0},
+      {name:'吴大芳',iz:2,ib:0,rz:5,rb:0,sz:0,sb:0},
+      {name:'姚李明',iz:12,ib:0,rz:1,rb:0,sz:2,sb:0},
+      {name:'何伟',iz:0,ib:0,rz:0,rb:0,sz:0,sb:0},
+      {name:'杨光伟',iz:0,ib:0,rz:1,rb:0,sz:0,sb:0},
+    ],
+    '城区装维': [
+      {name:'江英平',iz:34,ib:0,rz:5,rb:0,sz:1,sb:0},
+      {name:'姚应波',iz:27,ib:1,rz:5,rb:0,sz:6,sb:0},
+      {name:'廖中山',iz:25,ib:0,rz:15,rb:0,sz:9,sb:0},
+      {name:'田荣',iz:26,ib:1,rz:3,rb:0,sz:4,sb:0},
+      {name:'张道辉',iz:23,ib:2,rz:15,rb:0,sz:7,sb:0},
+      {name:'向万强',iz:19,ib:0,rz:8,rb:0,sz:9,sb:0},
+      {name:'潘思毅',iz:17,ib:0,rz:8,rb:0,sz:1,sb:0},
+      {name:'潘进',iz:17,ib:0,rz:2,rb:0,sz:2,sb:0},
+      {name:'石翔',iz:16,ib:0,rz:7,rb:0,sz:10,sb:0},
+      {name:'陈光林',iz:15,ib:0,rz:1,rb:0,sz:10,sb:0},
+      {name:'姚茂培',iz:0,ib:0,rz:4,rb:0,sz:4,sb:0},
+      {name:'胡明',iz:0,ib:0,rz:1,rb:0,sz:2,sb:0},
+    ],
+    '支撑人员': {iz:2,ib:2,rz:2,rb:0,sz:0,sb:0},
+  },
+  my: { // 十分满意率数据
+    t00: {
+      '姚金发':{fq:16,cp:13,s10:12,my:1}, '姚鹏':{fq:4,cp:3,s10:3,my:0},
+      '杨世增':{fq:5,cp:1,s10:1,my:0}, '杨斌':{fq:4,cp:4,s10:4,my:0},
+      '向万强':{fq:11,cp:4,s10:4,my:0}, '姚应波':{fq:21,cp:15,s10:15,my:0},
+      '廖中山':{fq:15,cp:13,s10:13,my:0}, '张道辉':{fq:12,cp:7,s10:6,my:1},
+      '江英平':{fq:31,cp:24,s10:24,my:0}, '潘思毅':{fq:10,cp:4,s10:4,my:0},
+      '潘进':{fq:14,cp:10,s10:9,my:1}, '田荣':{fq:24,cp:18,s10:18,my:0},
+      '石翔':{fq:10,cp:4,s10:4,my:0}, '陈光林':{fq:14,cp:8,s10:8,my:0},
+      '吕明军':{fq:7,cp:6,s10:6,my:0}, '吴大芳':{fq:1,cp:1,s10:1,my:0},
+      '姚李明':{fq:6,cp:4,s10:4,my:0}, '张家智':{fq:2,cp:0,s10:0,my:0},
+      '金沛':{fq:7,cp:7,s10:7,my:0},
+    },
+    t88: {
+      '吴先锋':{hz:2,fq:0,cp:0,s10:0}, '姚金发':{hz:1,fq:1,cp:0,s10:0},
+      '姚鹏':{hz:2,fq:1,cp:0,s10:0}, '杨世增':{hz:1,fq:1,cp:1,s10:0},
+      '杨斌':{hz:4,fq:2,cp:0,s10:0}, '杨轶杰':{hz:1,fq:0,cp:0,s10:0},
+      '向万强':{hz:9,fq:7,cp:2,s10:1}, '姚应波':{hz:6,fq:4,cp:2,s10:1},
+      '廖中山':{hz:9,fq:4,cp:2,s10:2}, '张道辉':{hz:7,fq:2,cp:1,s10:1},
+      '江英平':{hz:1,fq:1,cp:0,s10:0}, '潘思毅':{hz:1,fq:1,cp:0,s10:0},
+      '潘进':{hz:2,fq:0,cp:0,s10:0}, '田荣':{hz:4,fq:1,cp:0,s10:0},
+      '石翔':{hz:10,fq:4,cp:1,s10:1}, '姚茂培':{hz:4,fq:4,cp:0,s10:0},
+      '胡明':{hz:2,fq:0,cp:0,s10:0}, '陈光林':{hz:10,fq:1,cp:0,s10:0},
+      '秦美琼':{hz:0,fq:0,cp:0,s10:0}, '姚贤立':{hz:0,fq:0,cp:0,s10:0},
+      '何伟':{hz:0,fq:0,cp:0,s10:0}, '吕明军':{hz:2,fq:1,cp:0,s10:0},
+      '吴大芳':{hz:0,fq:0,cp:0,s10:0}, '姚李明':{hz:2,fq:0,cp:0,s10:0},
+      '张家智':{hz:6,fq:1,cp:0,s10:0}, '金沛':{hz:11,fq:0,cp:0,s10:0},
+    },
+    t159: {
+      '姚金发':{cp:2,s10:2}, '姚鹏':{cp:5,s10:5}, '杨世增':{cp:1,s10:1},
+      '杨斌':{cp:0,s10:0}, '向万强':{cp:3,s10:3}, '姚应波':{cp:2,s10:2},
+      '廖中山':{cp:5,s10:5}, '张道辉':{cp:4,s10:4}, '江英平':{cp:2,s10:2},
+      '潘思毅':{cp:4,s10:4}, '潘进':{cp:3,s10:3}, '田荣':{cp:8,s10:7},
+      '石翔':{cp:4,s10:4}, '陈光林':{cp:0,s10:0}, '吕明军':{cp:1,s10:1},
+      '吴大芳':{cp:1,s10:1}, '姚李明':{cp:1,s10:1}, '张家智':{cp:0,s10:0},
+      '金沛':{cp:2,s10:2},
+    },
+  }
 };
+
+// 上一次快照（7月1日-5日数据）—— 更新看板时，把CUR_SNAPSHOT的旧值复制到这里
+const PREV_SNAPSHOT = {
+  date: '2026-07-05',
+  ly: {
+    '凉伞农村装维': [
+      {name:'姚金发',iz:18,ib:0,rz:1,rb:0,sz:1,sb:0},
+      {name:'姚鹏',iz:9,ib:0,rz:3,rb:0,sz:2,sb:0},
+      {name:'杨斌',iz:4,ib:4,rz:4,rb:0,sz:4,sb:0},
+      {name:'杨世增',iz:9,ib:2,rz:6,rb:0,sz:1,sb:0},
+      {name:'杨轶杰',iz:0,ib:0,rz:3,rb:0,sz:0,sb:0},
+      {name:'吴先锋',iz:0,ib:0,rz:0,rb:0,sz:1,sb:0},
+    ],
+    '禾滩农村装维': [
+      {name:'金沛',iz:7,ib:0,rz:0,rb:0,sz:11,sb:0},
+      {name:'吕明军',iz:8,ib:0,rz:0,rb:0,sz:1,sb:0},
+      {name:'张家智',iz:3,ib:0,rz:1,rb:0,sz:6,sb:0},
+      {name:'吴大芳',iz:2,ib:0,rz:5,rb:0,sz:0,sb:0},
+      {name:'姚李明',iz:9,ib:0,rz:1,rb:0,sz:2,sb:0},
+      {name:'何伟',iz:0,ib:0,rz:0,rb:0,sz:0,sb:0},
+      {name:'杨光伟',iz:0,ib:0,rz:1,rb:0,sz:0,sb:0},
+    ],
+    '城区装维': [
+      {name:'江英平',iz:34,ib:0,rz:4,rb:0,sz:1,sb:0},
+      {name:'姚应波',iz:24,ib:1,rz:4,rb:0,sz:4,sb:0},
+      {name:'廖中山',iz:18,ib:0,rz:13,rb:0,sz:7,sb:0},
+      {name:'田荣',iz:26,ib:1,rz:3,rb:0,sz:4,sb:0},
+      {name:'张道辉',iz:21,ib:2,rz:12,rb:0,sz:4,sb:0},
+      {name:'向万强',iz:15,ib:0,rz:6,rb:0,sz:9,sb:0},
+      {name:'潘思毅',iz:15,ib:0,rz:8,rb:0,sz:1,sb:0},
+      {name:'潘进',iz:17,ib:0,rz:2,rb:0,sz:2,sb:0},
+      {name:'石翔',iz:14,ib:0,rz:5,rb:0,sz:9,sb:0},
+      {name:'陈光林',iz:14,ib:0,rz:1,rb:0,sz:1,sb:0},
+      {name:'姚茂培',iz:0,ib:0,rz:3,rb:0,sz:4,sb:0},
+      {name:'胡明',iz:0,ib:0,rz:1,rb:0,sz:2,sb:0},
+    ],
+    '支撑人员': {iz:0,ib:0,rz:1,rb:0,sz:0,sb:0},
+  },
+  my: {
+    t00: {
+      '姚金发':{fq:16,cp:13,s10:12,my:1}, '姚鹏':{fq:4,cp:3,s10:3,my:0},
+      '杨世增':{fq:5,cp:1,s10:1,my:0}, '杨斌':{fq:4,cp:4,s10:4,my:0},
+      '向万强':{fq:11,cp:4,s10:4,my:0}, '姚应波':{fq:21,cp:15,s10:15,my:0},
+      '廖中山':{fq:15,cp:13,s10:13,my:0}, '张道辉':{fq:12,cp:7,s10:6,my:1},
+      '江英平':{fq:31,cp:24,s10:24,my:0}, '潘思毅':{fq:10,cp:4,s10:4,my:0},
+      '潘进':{fq:14,cp:10,s10:9,my:1}, '田荣':{fq:24,cp:18,s10:18,my:0},
+      '石翔':{fq:10,cp:4,s10:4,my:0}, '陈光林':{fq:14,cp:8,s10:8,my:0},
+      '吕明军':{fq:7,cp:6,s10:6,my:0}, '吴大芳':{fq:1,cp:1,s10:1,my:0},
+      '姚李明':{fq:6,cp:4,s10:4,my:0}, '张家智':{fq:2,cp:0,s10:0,my:0},
+      '金沛':{fq:7,cp:7,s10:7,my:0},
+    },
+    t88: {
+      '吴先锋':{hz:1,fq:0,cp:0,s10:0}, '姚金发':{hz:1,fq:1,cp:0,s10:0},
+      '姚鹏':{hz:2,fq:1,cp:0,s10:0}, '杨世增':{hz:1,fq:1,cp:1,s10:0},
+      '杨斌':{hz:4,fq:2,cp:0,s10:0}, '杨轶杰':{hz:0,fq:0,cp:0,s10:0},
+      '向万强':{hz:9,fq:7,cp:2,s10:1}, '姚应波':{hz:4,fq:4,cp:2,s10:1},
+      '廖中山':{hz:7,fq:4,cp:2,s10:2}, '张道辉':{hz:4,fq:2,cp:1,s10:1},
+      '江英平':{hz:1,fq:1,cp:0,s10:0}, '潘思毅':{hz:1,fq:1,cp:0,s10:0},
+      '潘进':{hz:2,fq:0,cp:0,s10:0}, '田荣':{hz:4,fq:1,cp:0,s10:0},
+      '石翔':{hz:9,fq:4,cp:1,s10:1}, '姚茂培':{hz:4,fq:4,cp:0,s10:0},
+      '胡明':{hz:2,fq:0,cp:0,s10:0}, '陈光林':{hz:1,fq:1,cp:0,s10:0},
+      '秦美琼':{hz:0,fq:0,cp:0,s10:0}, '姚贤立':{hz:0,fq:0,cp:0,s10:0},
+      '何伟':{hz:0,fq:0,cp:0,s10:0}, '吕明军':{hz:1,fq:1,cp:0,s10:0},
+      '吴大芳':{hz:0,fq:0,cp:0,s10:0}, '姚李明':{hz:2,fq:0,cp:0,s10:0},
+      '张家智':{hz:6,fq:1,cp:0,s10:0}, '金沛':{hz:11,fq:0,cp:0,s10:0},
+    },
+    t159: {
+      '姚金发':{cp:2,s10:2}, '姚鹏':{cp:5,s10:5}, '杨世增':{cp:1,s10:1},
+      '杨斌':{cp:0,s10:0}, '向万强':{cp:3,s10:3}, '姚应波':{cp:2,s10:2},
+      '廖中山':{cp:5,s10:5}, '张道辉':{cp:4,s10:4}, '江英平':{cp:2,s10:2},
+      '潘思毅':{cp:4,s10:4}, '潘进':{cp:3,s10:3}, '田荣':{cp:8,s10:7},
+      '石翔':{cp:4,s10:4}, '陈光林':{cp:0,s10:0}, '吕明军':{cp:1,s10:1},
+      '吴大芳':{cp:1,s10:1}, '姚李明':{cp:1,s10:1}, '张家智':{cp:0,s10:0},
+      '金沛':{cp:2,s10:2},
+    },
+  }
+};
+
+// 自动算增量：当前 - 上次
+function calcDelta(cur, prev, keys) {
+  const d = {};
+  keys.forEach(k => { d['d'+k] = (cur[k]||0) - (prev[k]||0); });
+  return d;
+}
+
+// 构建带增量的履约率数据
+const LY_DATA = {};
+Object.keys(CUR_SNAPSHOT.ly).forEach(team => {
+  const cur = CUR_SNAPSHOT.ly[team];
+  const prev = PREV_SNAPSHOT.ly[team];
+  if (Array.isArray(cur)) {
+    LY_DATA[team] = cur.map(c => {
+      const p = prev ? prev.find(x => x.name === c.name) : null;
+      const d = p ? calcDelta(c, p, ['iz','ib','rz','rb','sz','sb']) : {diz:0,dib:0,drz:0,drb:0,dsz:0,dsb:0};
+      return {...c, ...d};
+    });
+  } else {
+    const d = prev ? calcDelta(cur, prev, ['iz','ib','rz','rb','sz','sb']) : {diz:0,dib:0,drz:0,drb:0,dsz:0,dsb:0};
+    LY_DATA[team] = {...cur, ...d};
+  }
+});
+
+// 构建带增量的满意率数据
+const T00 = {}; const T88 = {}; const T159 = {};
+Object.keys(CUR_SNAPSHOT.my.t00).forEach(name => {
+  const c = CUR_SNAPSHOT.my.t00[name]; const p = PREV_SNAPSHOT.my.t00[name];
+  const d = p ? calcDelta(c,p,['fq','cp','s10','my']) : {dfq:0,dcp:0,ds10:0,dmy:0};
+  T00[name] = {...c,...d, rate: c.cp>0?(c.s10/c.cp*100).toFixed(2)+'%':'0.00%'};
+});
+Object.keys(CUR_SNAPSHOT.my.t88).forEach(name => {
+  const c = CUR_SNAPSHOT.my.t88[name]; const p = PREV_SNAPSHOT.my.t88[name];
+  const d = p ? calcDelta(c,p,['hz','fq','cp','s10']) : {dhz:0,dfq:0,dcp:0,ds10:0};
+  T88[name] = {...c,...d, cpr:c.fq>0?(c.cp/c.fq*100).toFixed(2)+'%':'0.00%', s10r:c.cp>0?(c.s10/c.cp*100).toFixed(2)+'%':'0.00%'};
+});
+Object.keys(CUR_SNAPSHOT.my.t159).forEach(name => {
+  const c = CUR_SNAPSHOT.my.t159[name]; const p = PREV_SNAPSHOT.my.t159[name];
+  const d = p ? calcDelta(c,p,['cp','s10']) : {dcp:0,ds10:0};
+  T159[name] = {...c,...d, lz:0,jz:0, cpr:c.cp>0?'100%':'0%', s10r:c.cp>0?(c.s10/c.cp*100).toFixed(2)+'%':'0%', my:0,bmy:0,dmy:0};
+});
 
 (function buildLY() {
   const colors = ['c1','c2','c3','c4'];
@@ -217,78 +379,7 @@ const LY_DATA = {
 
 // ===================== 十分满意率看板 =====================
 // 累计(1-6日) + 增量(7月6日 = 1-6日 - 1-5日)
-const T00 = {
-  '姚金发':{fq:16,dfq:0,cp:13,dcp:0,s10:12,ds10:0,rate:'92.31%',my:1,dmy:0,bmy:0},
-  '姚鹏':{fq:4,dfq:0,cp:3,dcp:0,s10:3,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '杨世增':{fq:5,dfq:0,cp:1,dcp:0,s10:1,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '杨斌':{fq:4,dfq:0,cp:4,dcp:0,s10:4,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '向万强':{fq:11,dfq:0,cp:4,dcp:0,s10:4,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '姚应波':{fq:21,dfq:0,cp:15,dcp:0,s10:15,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '廖中山':{fq:15,dfq:0,cp:13,dcp:0,s10:13,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '张道辉':{fq:12,dfq:0,cp:7,dcp:0,s10:6,ds10:0,rate:'85.71%',my:1,dmy:0,bmy:0},
-  '江英平':{fq:31,dfq:0,cp:24,dcp:0,s10:24,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '潘思毅':{fq:10,dfq:0,cp:4,dcp:0,s10:4,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '潘进':{fq:14,dfq:0,cp:10,dcp:0,s10:9,ds10:0,rate:'90.00%',my:1,dmy:0,bmy:0},
-  '田荣':{fq:24,dfq:0,cp:18,dcp:0,s10:18,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '石翔':{fq:10,dfq:0,cp:4,dcp:0,s10:4,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '陈光林':{fq:14,dfq:0,cp:8,dcp:0,s10:8,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '吕明军':{fq:7,dfq:0,cp:6,dcp:0,s10:6,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '吴大芳':{fq:1,dfq:0,cp:1,dcp:0,s10:1,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '姚李明':{fq:6,dfq:0,cp:4,dcp:0,s10:4,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-  '张家智':{fq:2,dfq:0,cp:0,dcp:0,s10:0,ds10:0,rate:'0.00%',my:0,dmy:0,bmy:0},
-  '金沛':{fq:7,dfq:0,cp:7,dcp:0,s10:7,ds10:0,rate:'100.00%',my:0,dmy:0,bmy:0},
-};
-
-const T88 = {
-  '吴先锋':{hz:2,dhz:1,fq:0,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '姚金发':{hz:1,dhz:0,fq:1,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '姚鹏':{hz:2,dhz:0,fq:1,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '杨世增':{hz:1,dhz:0,fq:1,dfq:0,cp:1,dcp:0,s10:0,ds10:0,cpr:'100.00%',s10r:'0.00%',bmy:0},
-  '杨斌':{hz:4,dhz:0,fq:2,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '杨轶杰':{hz:1,dhz:1,fq:0,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '向万强':{hz:9,dhz:0,fq:7,dfq:0,cp:2,dcp:0,s10:1,ds10:0,cpr:'28.57%',s10r:'50.00%',bmy:0},
-  '姚应波':{hz:6,dhz:2,fq:4,dfq:0,cp:2,dcp:0,s10:1,ds10:0,cpr:'50.00%',s10r:'50.00%',bmy:0},
-  '廖中山':{hz:9,dhz:2,fq:4,dfq:0,cp:2,dcp:0,s10:2,ds10:0,cpr:'50.00%',s10r:'100.00%',bmy:0},
-  '张道辉':{hz:7,dhz:3,fq:2,dfq:0,cp:1,dcp:0,s10:1,ds10:0,cpr:'50.00%',s10r:'100.00%',bmy:0},
-  '江英平':{hz:1,dhz:0,fq:1,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '潘思毅':{hz:1,dhz:0,fq:1,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '潘进':{hz:2,dhz:0,fq:0,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '田荣':{hz:4,dhz:0,fq:1,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '石翔':{hz:10,dhz:1,fq:4,dfq:0,cp:1,dcp:0,s10:1,ds10:0,cpr:'25.00%',s10r:'100.00%',bmy:0},
-  '姚茂培':{hz:4,dhz:0,fq:4,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '胡明':{hz:2,dhz:0,fq:0,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '陈光林':{hz:10,dhz:9,fq:1,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '秦美琼':{hz:0,dhz:0,fq:0,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '姚贤立':{hz:0,dhz:0,fq:0,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '何伟':{hz:0,dhz:0,fq:0,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '吕明军':{hz:2,dhz:1,fq:1,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '吴大芳':{hz:0,dhz:0,fq:0,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '姚李明':{hz:2,dhz:0,fq:0,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '张家智':{hz:6,dhz:0,fq:1,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-  '金沛':{hz:11,dhz:0,fq:0,dfq:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',bmy:0},
-};
-
-const T159 = {
-  '姚金发':{lz:5,jz:2,cp:2,dcp:0,s10:2,ds10:0,cpr:'100.00%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '姚鹏':{lz:5,jz:5,cp:5,dcp:0,s10:5,ds10:0,cpr:'100.00%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '杨世增':{lz:3,jz:4,cp:1,dcp:0,s10:1,ds10:0,cpr:'25.00%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '杨斌':{lz:0,jz:0,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',my:0,dmy:0,bmy:0},
-  '向万强':{lz:5,jz:7,cp:3,dcp:0,s10:3,ds10:0,cpr:'50.00%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '姚应波':{lz:4,jz:3,cp:2,dcp:0,s10:2,ds10:0,cpr:'66.67%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '廖中山':{lz:5,jz:9,cp:5,dcp:0,s10:5,ds10:0,cpr:'83.33%',s10r:'100.00%',my:1,dmy:0,bmy:0},
-  '张道辉':{lz:9,jz:10,cp:4,dcp:0,s10:4,ds10:0,cpr:'44.44%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '江英平':{lz:3,jz:3,cp:2,dcp:0,s10:2,ds10:0,cpr:'66.67%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '潘思毅':{lz:6,jz:6,cp:4,dcp:0,s10:4,ds10:0,cpr:'80.00%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '潘进':{lz:1,jz:3,cp:3,dcp:0,s10:3,ds10:0,cpr:'100.00%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '田荣':{lz:9,jz:11,cp:8,dcp:0,s10:7,ds10:0,cpr:'72.73%',s10r:'87.50%',my:1,dmy:0,bmy:0},
-  '石翔':{lz:6,jz:5,cp:4,dcp:0,s10:4,ds10:0,cpr:'100.00%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '陈光林':{lz:2,jz:1,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',my:0,dmy:0,bmy:0},
-  '吕明军':{lz:7,jz:1,cp:1,dcp:0,s10:1,ds10:0,cpr:'100.00%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '吴大芳':{lz:1,jz:1,cp:1,dcp:0,s10:1,ds10:0,cpr:'100.00%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '姚李明':{lz:2,jz:3,cp:1,dcp:0,s10:1,ds10:0,cpr:'33.33%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-  '张家智':{lz:6,jz:3,cp:0,dcp:0,s10:0,ds10:0,cpr:'0.00%',s10r:'0.00%',my:0,dmy:0,bmy:0},
-  '金沛':{lz:2,jz:2,cp:2,dcp:0,s10:2,ds10:0,cpr:'100.00%',s10r:'100.00%',my:0,dmy:0,bmy:0},
-};
+// T00/T88/T159 已在上方从 CUR_SNAPSHOT/PREV_SNAPSHOT 自动构建（含增量+率值）
 
 const MY_TEAMS = [
   {name:'凉伞农村装维',members:['姚金发','姚鹏','杨斌','杨世增','杨轶杰','吴先锋']},
@@ -303,11 +394,11 @@ function calcPerson(name) {
   const t159 = T159[name] || null;
   let cp00 = t00 ? t00.cp : 0, s1000 = t00 ? t00.s10 : 0, my00 = t00 ? t00.my : 0;
   let cp88 = t88 ? t88.cp : 0, s1088 = t88 ? t88.s10 : 0;
-  let cp159 = t159 ? t159.cp : 0, s10159 = t159 ? t159.s10 : 0, my159 = t159 ? t159.my : 0;
+  let cp159 = t159 ? t159.cp : 0, s10159 = t159 ? t159.s10 : 0, my159 = t159 ? (t159.my||0) : 0;
   // deltas
   let dcp00 = t00 ? t00.dcp : 0, ds1000 = t00 ? t00.ds10 : 0, dmy00 = t00 ? t00.dmy : 0;
   let dcp88 = t88 ? t88.dcp : 0, ds1088 = t88 ? t88.ds10 : 0;
-  let dcp159 = t159 ? t159.dcp : 0, ds10159 = t159 ? t159.ds10 : 0, dmy159 = t159 ? t159.dmy : 0;
+  let dcp159 = t159 ? t159.dcp : 0, ds10159 = t159 ? t159.ds10 : 0, dmy159 = t159 ? (t159.dmy||0) : 0;
 
   let totalCp = cp00 + cp88 + cp159, totalS10 = s1000 + s1088 + s10159, totalMy = my00 + my159;
   let dtotalCp = dcp00 + dcp88 + dcp159, dtotalS10 = ds1000 + ds1088 + ds10159, dtotalMy = dmy00 + dmy159;
