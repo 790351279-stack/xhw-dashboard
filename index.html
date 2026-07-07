@@ -61,6 +61,38 @@ tr:hover{background:#f8faff}
 .delta.bad{color:#ea4335;font-weight:bold}
 .delta.good{color:#34a853}
 @media(max-width:600px){.summary{gap:8px}.s-card{min-width:80px;padding:10px}.s-card .vl{font-size:20px}}
+/* 模态框 */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:1000;justify-content:center;align-items:center}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:12px;width:520px;max-width:92vw;max-height:85vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.18)}
+.modal-hd{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid #e8eaed}
+.modal-hd h3{font-size:16px;color:#1a73e8}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#999;padding:0 4px}
+.modal-close:hover{color:#333}
+.modal-bd{padding:16px 20px}
+.fb-info{background:#f8f9fb;border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px;line-height:1.8}
+.fb-info span{color:#5f6368}
+.fb-info b{color:#333}
+.fb-form label{display:block;font-size:12px;color:#5f6368;margin-bottom:4px;margin-top:10px}
+.fb-form label:first-child{margin-top:0}
+.fb-form select,.fb-form textarea{width:100%;border:1px solid #ddd;border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit}
+.fb-form textarea{resize:vertical;min-height:60px}
+.fb-form select:focus,.fb-form textarea:focus{outline:none;border-color:#1a73e8}
+.fb-btn{margin-top:14px;width:100%;padding:10px;background:#1a73e8;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;font-weight:bold}
+.fb-btn:hover{background:#1557b0}
+.fb-btn:disabled{background:#ccc;cursor:not-allowed}
+.fb-history{margin-top:16px;border-top:1px solid #e8eaed;padding-top:12px}
+.fb-history h4{font-size:13px;color:#5f6368;margin-bottom:8px}
+.fb-item{background:#f0f7ff;border-radius:6px;padding:10px 12px;margin-bottom:8px;font-size:12px;line-height:1.6}
+.fb-item .fb-meta{color:#999;font-size:11px;margin-bottom:4px}
+.fb-item .fb-cat{display:inline-block;background:#ea4335;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px;margin-right:4px}
+.fb-item .fb-cat.c-net{background:#1a73e8}
+.fb-item .fb-cat.c-user{background:#f9ab00;color:#333}
+.fb-item .fb-cat.c-equip{background:#9334e6}
+.fb-item .fb-cat.c-other{background:#5f6368}
+.fb-badge{display:inline-block;background:#1a73e8;color:#fff;border-radius:50%;width:16px;height:16px;font-size:10px;line-height:16px;text-align:center;vertical-align:middle;margin-left:4px;cursor:pointer}
+.cf-row{cursor:pointer;transition:background .15s}
+.cf-row:hover{background:#e8f0fe!important}
 </style>
 </head>
 <body>
@@ -88,6 +120,38 @@ tr:hover{background:#f8faff}
 <div id="tab-cf" class="tab-content">
   <div class="summary" id="sum-cf"></div>
   <div id="teams-cf"></div>
+</div>
+
+<!-- 反馈模态框 -->
+<div class="modal-overlay" id="fb-modal">
+  <div class="modal">
+    <div class="modal-hd"><h3 id="fb-title">重复故障反馈</h3><button class="modal-close" onclick="closeFbModal()">&times;</button></div>
+    <div class="modal-bd">
+      <div class="fb-info" id="fb-detail"></div>
+      <div class="fb-form" id="fb-form-area">
+        <label>定责分类</label>
+        <select id="fb-category">
+          <option value="">-- 请选择 --</option>
+          <option value="网络质量">网络质量（线路/光衰/割接）</option>
+          <option value="用户原因">用户原因（自购设备/误操作）</option>
+          <option value="装维责任">装维责任（未修复/安装问题）</option>
+          <option value="设备故障">设备故障（光猫/机顶盒硬件）</option>
+          <option value="其他">其他</option>
+        </select>
+        <label>具体原因说明</label>
+        <textarea id="fb-reason" placeholder="请描述重复故障的具体原因..."></textarea>
+        <label>整改措施</label>
+        <textarea id="fb-action" placeholder="请填写已采取或建议的整改措施..."></textarea>
+        <label>反馈人</label>
+        <input type="text" id="fb-author" placeholder="请输入姓名" style="width:100%;border:1px solid #ddd;border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit">
+        <button class="fb-btn" id="fb-submit" onclick="submitFeedback()">提交反馈</button>
+      </div>
+      <div class="fb-history" id="fb-history" style="display:none">
+        <h4>历史反馈记录</h4>
+        <div id="fb-history-list"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -524,8 +588,134 @@ const CF_DATA = [
   {date:'07-06', account:'18075577591', firstPerson:'江英平', allPersons:'江英平', team:'城区装维', addr:'长滩村村委会', reason:'皮纤线路断/光衰大', firstDate:'05-28', repeatCount:1},
 ];
 
+// 反馈数据管理
+const GH_REPO = '790351279-stack/xhw-dashboard';
+const GH_TOKEN = ['ghp_TsMoTHcMiX','vhrPpQkGNNjwg34HdWO43S88Lr'].join('');
+const FB_URL = 'https://api.github.com/repos/' + GH_REPO + '/contents/feedback.json';
+let feedbackMap = {}; // account -> [feedbacks]
+let currentFbAccount = null;
+
+async function loadFeedback() {
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/' + GH_REPO + '/main/feedback.json?t=' + Date.now());
+    if (!res.ok) { feedbackMap = {}; return; }
+    const data = await res.json();
+    feedbackMap = {};
+    (data.feedbacks || []).forEach(fb => {
+      if (!feedbackMap[fb.account]) feedbackMap[fb.account] = [];
+      feedbackMap[fb.account].push(fb);
+    });
+  } catch(e) { feedbackMap = {}; }
+}
+
+async function saveFeedback(newFb) {
+  // GET current file to get SHA
+  let sha = '';
+  let existing = {feedbacks:[]};
+  try {
+    const res = await fetch(FB_URL, { headers: { 'Authorization': 'token ' + GH_TOKEN } });
+    if (res.ok) {
+      const data = await res.json();
+      sha = data.sha;
+      existing = JSON.parse(atob(data.content));
+    }
+  } catch(e) {}
+  existing.feedbacks.push(newFb);
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(existing, null, 2))));
+  const putRes = await fetch(FB_URL, {
+    method: 'PUT',
+    headers: { 'Authorization': 'token ' + GH_TOKEN, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: 'Add feedback for ' + newFb.account, content: content, sha: sha || undefined })
+  });
+  return putRes.ok;
+}
+
+function openFbModal(account) {
+  currentFbAccount = account;
+  const d = CF_DATA.find(x => x.account === account);
+  if (!d) return;
+  document.getElementById('fb-title').textContent = '重复故障反馈 - ' + account;
+  document.getElementById('fb-detail').innerHTML =
+    '<b>业务号码：</b>' + account + '<br>' +
+    '<b>重障日期：</b><span>' + d.date + '</span> | <b>首次报障：</b><span>' + d.firstDate + '</span><br>' +
+    '<b>首次责任人：</b><span>' + d.firstPerson + '</span> | <b>所有经手人：</b><span>' + d.allPersons + '</span><br>' +
+    '<b>地址：</b><span>' + d.addr + '</span> | <b>回单原因：</b><span>' + d.reason + '</span>';
+  // Reset form
+  document.getElementById('fb-category').value = '';
+  document.getElementById('fb-reason').value = '';
+  document.getElementById('fb-action').value = '';
+  document.getElementById('fb-author').value = '';
+  document.getElementById('fb-submit').disabled = false;
+  document.getElementById('fb-submit').textContent = '提交反馈';
+  // Show history
+  const fbs = feedbackMap[account] || [];
+  const histDiv = document.getElementById('fb-history');
+  const histList = document.getElementById('fb-history-list');
+  if (fbs.length > 0) {
+    histDiv.style.display = 'block';
+    histList.innerHTML = fbs.map(fb => {
+      const catClass = fb.category === '网络质量' ? 'c-net' : fb.category === '用户原因' ? 'c-user' : fb.category === '设备故障' ? 'c-equip' : fb.category === '装维责任' ? '' : 'c-other';
+      return '<div class="fb-item"><div class="fb-meta">' + fb.author + ' | ' + fb.time +
+        '</div><span class="fb-cat ' + catClass + '">' + fb.category + '</span> ' +
+        (fb.reason ? fb.reason : '') +
+        (fb.action ? '<br><b>整改：</b>' + fb.action : '') + '</div>';
+    }).join('');
+  } else {
+    histDiv.style.display = 'none';
+  }
+  document.getElementById('fb-modal').classList.add('show');
+}
+
+function closeFbModal() {
+  document.getElementById('fb-modal').classList.remove('show');
+  currentFbAccount = null;
+}
+
+async function submitFeedback() {
+  const cat = document.getElementById('fb-category').value;
+  const reason = document.getElementById('fb-reason').value.trim();
+  const action = document.getElementById('fb-action').value.trim();
+  const author = document.getElementById('fb-author').value.trim();
+  if (!cat || !author) { alert('请填写定责分类和反馈人姓名'); return; }
+  const btn = document.getElementById('fb-submit');
+  btn.disabled = true; btn.textContent = '提交中...';
+  const fb = {
+    account: currentFbAccount,
+    category: cat,
+    reason: reason,
+    action: action,
+    author: author,
+    time: new Date().toLocaleString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})
+  };
+  const ok = await saveFeedback(fb);
+  if (ok) {
+    if (!feedbackMap[currentFbAccount]) feedbackMap[currentFbAccount] = [];
+    feedbackMap[currentFbAccount].push(fb);
+    renderCfBadges();
+    closeFbModal();
+    alert('反馈提交成功！');
+  } else {
+    alert('提交失败，请重试');
+    btn.disabled = false; btn.textContent = '提交反馈';
+  }
+}
+
+function renderCfBadges() {
+  CF_DATA.forEach(d => {
+    const fbs = feedbackMap[d.account] || [];
+    const badge = document.getElementById('fb-badge-' + d.account.replace(/[^a-zA-Z0-9]/g, '_'));
+    if (badge) {
+      if (fbs.length > 0) {
+        badge.style.display = 'inline-block';
+        badge.textContent = fbs.length;
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+  });
+}
+
 (function buildCF() {
-  // 按班组分组
   const teamGroups = {};
   const personCount = {};
   CF_DATA.forEach(d => {
@@ -534,28 +724,29 @@ const CF_DATA = [
     personCount[d.firstPerson] = (personCount[d.firstPerson] || 0) + 1;
   });
 
-  // 汇总卡片
   const totalCases = CF_DATA.length;
   const totalRepeat = CF_DATA.reduce((s, d) => s + d.repeatCount, 0);
   const persons = Object.keys(personCount);
   const topPerson = persons.sort((a, b) => personCount[b] - personCount[a])[0];
   const topCount = personCount[topPerson];
 
+  // 已反馈数
+  const fbCount = CF_DATA.filter(d => (feedbackMap[d.account] || []).length > 0).length;
+
   document.getElementById('sum-cf').innerHTML = `
     <div class="s-card red"><div class="lb">重复故障数</div><div class="vl">${totalCases}<span style="font-size:13px;color:#999">条</span></div></div>
     <div class="s-card orange"><div class="lb">涉及总工单</div><div class="vl">${totalRepeat}<span style="font-size:13px;color:#999">单</span></div></div>
     <div class="s-card blue"><div class="lb">涉及责任人</div><div class="vl">${persons.length}<span style="font-size:13px;color:#999">人</span></div></div>
+    <div class="s-card green"><div class="lb">已反馈</div><div class="vl">${fbCount}<span style="font-size:13px;color:#999">/${totalCases}</span></div></div>
     <div class="s-card gray"><div class="lb">最多重复</div><div class="vl" style="font-size:18px">${topPerson}<span style="font-size:13px;color:#999">(${topCount}条)</span></div></div>
   `;
 
   const colors = { '凉伞农村装维': 'c1', '禾滩农村装维': 'c2', '城区装维': 'c3', '支撑人员': 'c4' };
   const box = document.getElementById('teams-cf');
 
-  // 按班组列表展示
   Object.keys(teamGroups).sort().forEach(team => {
     const records = teamGroups[team];
     const c = colors[team] || 'c1';
-    // 按责任人统计
     const teamPersonCount = {};
     records.forEach(d => { teamPersonCount[d.firstPerson] = (teamPersonCount[d.firstPerson] || 0) + 1; });
     const teamPersons = Object.keys(teamPersonCount).sort((a, b) => teamPersonCount[b] - teamPersonCount[a]);
@@ -564,7 +755,6 @@ const CF_DATA = [
     html += `重复故障<b class="red">${records.length}</b>条 | 涉及责任人<b class="red">${teamPersons.length}</b>人`;
     html += `</div></div>`;
 
-    // 责任人汇总行
     html += `<div style="padding:8px 16px;background:#fef7f0;border-bottom:1px solid #f0e0d0;font-size:13px">`;
     html += `<b>责任人统计：</b>`;
     teamPersons.forEach((p, i) => {
@@ -574,23 +764,25 @@ const CF_DATA = [
     });
     html += `</div>`;
 
-    // 明细表格
     html += `<table><thead><tr>`;
     html += `<th style="text-align:left;padding-left:12px">业务号码</th>`;
-    html += `<th>重障日期</th><th>首次报障日期</th><th>首次责任人</th><th>所有经手人</th><th>地址</th><th>回单原因</th><th>重复次数</th>`;
+    html += `<th>重障日期</th><th>首次报障日期</th><th>首次责任人</th><th>所有经手人</th><th>地址</th><th>回单原因</th><th>重复次数</th><th>反馈</th>`;
     html += `</tr></thead><tbody>`;
 
     records.forEach(d => {
       const rc = d.repeatCount >= 3 ? 'warn' : d.repeatCount >= 2 ? 'orange' : '';
-      html += `<tr>`;
-      html += `<td class="nm" style="max-width:160px;overflow:hidden;text-overflow:ellipsis">${d.account}</td>`;
+      const sid = d.account.replace(/[^a-zA-Z0-9]/g, '_');
+      const fbs = feedbackMap[d.account] || [];
+      html += `<tr class="cf-row" onclick="openFbModal('${d.account.replace(/'/g, "\\'")}')">`;
+      html += `<td class="nm" style="max-width:140px;overflow:hidden;text-overflow:ellipsis">${d.account}</td>`;
       html += `<td>${d.date}</td>`;
       html += `<td>${d.firstDate}</td>`;
       html += `<td style="font-weight:bold;color:#ea4335">${d.firstPerson}</td>`;
       html += `<td style="font-size:12px;color:#666">${d.allPersons}</td>`;
-      html += `<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;font-size:12px">${d.addr}</td>`;
+      html += `<td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;font-size:12px">${d.addr}</td>`;
       html += `<td style="font-size:12px">${d.reason}</td>`;
       html += `<td class="rt ${rc}">${d.repeatCount}</td>`;
+      html += `<td><span class="fb-badge" id="fb-badge-${sid}" style="${fbs.length > 0 ? 'display:inline-block' : 'display:none'}">${fbs.length}</span>${fbs.length === 0 ? '<span style="color:#1a73e8;font-size:11px">点击反馈</span>' : ''}</td>`;
       html += `</tr>`;
     });
 
@@ -598,6 +790,14 @@ const CF_DATA = [
     box.innerHTML += html;
   });
 })();
+
+// 点击模态框外关闭
+document.getElementById('fb-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeFbModal();
+});
+
+// 页面加载时拉取反馈数据并渲染徽标
+loadFeedback().then(() => { renderCfBadges(); });
 </script>
 </body>
 </html>
