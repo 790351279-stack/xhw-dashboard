@@ -221,43 +221,41 @@ const CUR_SNAPSHOT = {
     ],
     '支撑人员': {iz:2,ib:2,rz:2,rb:0,sz:0,sb:0},
   },
-  my: { // 十分满意率数据
-    t00: {
-      '姚金发':{fq:16,cp:13,s10:12,my:1}, '姚鹏':{fq:4,cp:3,s10:3,my:0},
-      '杨世增':{fq:5,cp:1,s10:1,my:0}, '杨斌':{fq:4,cp:4,s10:4,my:0},
-      '向万强':{fq:11,cp:4,s10:4,my:0}, '姚应波':{fq:21,cp:15,s10:15,my:0},
-      '廖中山':{fq:15,cp:13,s10:13,my:0}, '张道辉':{fq:12,cp:7,s10:6,my:1},
-      '江英平':{fq:31,cp:24,s10:24,my:0}, '潘思毅':{fq:10,cp:4,s10:4,my:0},
-      '潘进':{fq:14,cp:10,s10:9,my:1}, '田荣':{fq:24,cp:18,s10:18,my:0},
-      '石翔':{fq:10,cp:4,s10:4,my:0}, '陈光林':{fq:14,cp:8,s10:8,my:0},
-      '吕明军':{fq:7,cp:6,s10:6,my:0}, '吴大芳':{fq:1,cp:1,s10:1,my:0},
-      '姚李明':{fq:6,cp:4,s10:4,my:0}, '张家智':{fq:2,cp:0,s10:0,my:0},
-      '金沛':{fq:7,cp:7,s10:7,my:0},
-    },
-    t88: {
-      '吴先锋':{hz:2,fq:0,cp:0,s10:0}, '姚金发':{hz:1,fq:1,cp:0,s10:0},
-      '姚鹏':{hz:2,fq:1,cp:0,s10:0}, '杨世增':{hz:1,fq:1,cp:1,s10:0},
-      '杨斌':{hz:4,fq:2,cp:0,s10:0}, '杨轶杰':{hz:1,fq:0,cp:0,s10:0},
-      '向万强':{hz:9,fq:7,cp:2,s10:1}, '姚应波':{hz:6,fq:4,cp:2,s10:1},
-      '廖中山':{hz:9,fq:4,cp:2,s10:2}, '张道辉':{hz:7,fq:2,cp:1,s10:1},
-      '江英平':{hz:1,fq:1,cp:0,s10:0}, '潘思毅':{hz:1,fq:1,cp:0,s10:0},
-      '潘进':{hz:2,fq:0,cp:0,s10:0}, '田荣':{hz:4,fq:1,cp:0,s10:0},
-      '石翔':{hz:10,fq:4,cp:1,s10:1}, '姚茂培':{hz:4,fq:4,cp:0,s10:0},
-      '胡明':{hz:2,fq:0,cp:0,s10:0}, '陈光林':{hz:10,fq:1,cp:0,s10:0},
-      '秦美琼':{hz:0,fq:0,cp:0,s10:0}, '姚贤立':{hz:0,fq:0,cp:0,s10:0},
-      '何伟':{hz:0,fq:0,cp:0,s10:0}, '吕明军':{hz:2,fq:1,cp:0,s10:0},
-      '吴大芳':{hz:0,fq:0,cp:0,s10:0}, '姚李明':{hz:2,fq:0,cp:0,s10:0},
-      '张家智':{hz:6,fq:1,cp:0,s10:0}, '金沛':{hz:11,fq:0,cp:0,s10:0},
-    },
-    t159: {
-      '姚金发':{cp:2,s10:2}, '姚鹏':{cp:5,s10:5}, '杨世增':{cp:1,s10:1},
-      '杨斌':{cp:0,s10:0}, '向万强':{cp:3,s10:3}, '姚应波':{cp:2,s10:2},
-      '廖中山':{cp:5,s10:5}, '张道辉':{cp:4,s10:4}, '江英平':{cp:2,s10:2},
-      '潘思毅':{cp:4,s10:4}, '潘进':{cp:3,s10:3}, '田荣':{cp:8,s10:7},
-      '石翔':{cp:4,s10:4}, '陈光林':{cp:0,s10:0}, '吕明军':{cp:1,s10:1},
-      '吴大芳':{cp:1,s10:1}, '姚李明':{cp:1,s10:1}, '张家智':{cp:0,s10:0},
-      '金沛':{cp:2,s10:2},
-    },
+  my: { // 表2502F 十分满意率数据（data source switched）
+    people: [
+      // 凉伞农村装维 (t=0)  zw=[分子,分母] gz=故障 kz=开通 qtz=其他装 tyy=天翼云眼 bcx=支撑不满意修复 zd=支撑主动/前后 zsh=政企售后 zkz=政企开通
+      {n:'吴先锋',t:0,r:'-',zw:[0,0],gz:[0,0],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'姚金发',t:0,r:'89.47%',zw:[17,19],gz:[2,2],kz:[12,13],qtz:[2,2],tyy:[0,0],bcx:[0,0],zd:[1,2],zsh:[0,0],zkz:[2,2]},
+      {n:'姚鹏',t:0,r:'100.00%',zw:[12,12],gz:[4,4],kz:[3,3],qtz:[5,5],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'杨世增',t:0,r:'85.71%',zw:[6,7],gz:[4,4],kz:[1,1],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[0,1],zsh:[0,0],zkz:[0,0]},
+      {n:'杨斌',t:0,r:'90.00%',zw:[9,10],gz:[5,6],kz:[4,4],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'杨轶杰',t:0,r:'100.00%',zw:[3,3],gz:[3,3],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      // 禾滩农村装维 (t=1)
+      {n:'金沛',t:1,r:'100.00%',zw:[9,9],gz:[0,0],kz:[7,7],qtz:[2,2],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'吕明军',t:1,r:'100.00%',zw:[8,8],gz:[0,0],kz:[6,6],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[1,1]},
+      {n:'张家智',t:1,r:'-',zw:[0,0],gz:[0,0],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'吴大芳',t:1,r:'100.00%',zw:[7,7],gz:[5,5],kz:[1,1],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'姚李明',t:1,r:'100.00%',zw:[8,8],gz:[0,0],kz:[7,7],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'杨光伟',t:1,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      // 城区装维 (t=2)
+      {n:'向万强',t:2,r:'88.24%',zw:[15,17],gz:[3,4],kz:[7,7],qtz:[4,4],tyy:[0,0],bcx:[0,0],zd:[1,2],zsh:[0,0],zkz:[0,0]},
+      {n:'姚应波',t:2,r:'92.59%',zw:[25,27],gz:[3,3],kz:[17,17],qtz:[2,2],tyy:[0,0],bcx:[0,0],zd:[1,2],zsh:[0,0],zkz:[2,3]},
+      {n:'姚茂培',t:2,r:'100.00%',zw:[3,3],gz:[3,3],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'廖中山',t:2,r:'97.62%',zw:[41,42],gz:[13,13],kz:[17,17],qtz:[7,8],tyy:[0,0],bcx:[0,0],zd:[2,2],zsh:[0,0],zkz:[2,2]},
+      {n:'张道辉',t:2,r:'92.86%',zw:[26,28],gz:[13,14],kz:[6,7],qtz:[5,5],tyy:[0,0],bcx:[0,0],zd:[2,2],zsh:[0,0],zkz:[0,0]},
+      {n:'江英平',t:2,r:'96.67%',zw:[29,30],gz:[3,4],kz:[24,24],qtz:[2,2],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'潘思毅',t:2,r:'100.00%',zw:[20,20],gz:[7,7],kz:[5,5],qtz:[5,5],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[3,3]},
+      {n:'潘进',t:2,r:'87.50%',zw:[14,16],gz:[1,1],kz:[9,10],qtz:[3,3],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[1,2]},
+      {n:'田荣',t:2,r:'92.86%',zw:[26,28],gz:[1,2],kz:[18,18],qtz:[7,8],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'石翔',t:2,r:'94.74%',zw:[18,19],gz:[6,7],kz:[6,6],qtz:[5,5],tyy:[0,0],bcx:[0,0],zd:[1,1],zsh:[0,0],zkz:[0,0]},
+      {n:'胡明',t:2,r:'-',zw:[0,0],gz:[0,0],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'陈光林',t:2,r:'100.00%',zw:[12,12],gz:[1,1],kz:[8,8],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[1,1],zsh:[0,0],zkz:[1,1]},
+      // 支撑人员 (t=3)
+      {n:'张勇',t:3,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'姚芳燕',t:3,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'秦美琼',t:3,r:'-',zw:[0,0],gz:[0,0],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'张星辰',t:3,r:'100.00%',zw:[1,1],gz:[0,0],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[1,1],zkz:[0,0]},
+    ]
   }
 };
 
@@ -298,44 +296,7 @@ const PREV_SNAPSHOT = {
     ],
     '支撑人员': {iz:0,ib:0,rz:1,rb:0,sz:0,sb:0},
   },
-  my: {
-    t00: {
-      '姚金发':{fq:16,cp:13,s10:12,my:1}, '姚鹏':{fq:4,cp:3,s10:3,my:0},
-      '杨世增':{fq:5,cp:1,s10:1,my:0}, '杨斌':{fq:4,cp:4,s10:4,my:0},
-      '向万强':{fq:11,cp:4,s10:4,my:0}, '姚应波':{fq:21,cp:15,s10:15,my:0},
-      '廖中山':{fq:15,cp:13,s10:13,my:0}, '张道辉':{fq:12,cp:7,s10:6,my:1},
-      '江英平':{fq:31,cp:24,s10:24,my:0}, '潘思毅':{fq:10,cp:4,s10:4,my:0},
-      '潘进':{fq:14,cp:10,s10:9,my:1}, '田荣':{fq:24,cp:18,s10:18,my:0},
-      '石翔':{fq:10,cp:4,s10:4,my:0}, '陈光林':{fq:14,cp:8,s10:8,my:0},
-      '吕明军':{fq:7,cp:6,s10:6,my:0}, '吴大芳':{fq:1,cp:1,s10:1,my:0},
-      '姚李明':{fq:6,cp:4,s10:4,my:0}, '张家智':{fq:2,cp:0,s10:0,my:0},
-      '金沛':{fq:7,cp:7,s10:7,my:0},
-    },
-    t88: {
-      '吴先锋':{hz:1,fq:0,cp:0,s10:0}, '姚金发':{hz:1,fq:1,cp:0,s10:0},
-      '姚鹏':{hz:2,fq:1,cp:0,s10:0}, '杨世增':{hz:1,fq:1,cp:1,s10:0},
-      '杨斌':{hz:4,fq:2,cp:0,s10:0}, '杨轶杰':{hz:0,fq:0,cp:0,s10:0},
-      '向万强':{hz:9,fq:7,cp:2,s10:1}, '姚应波':{hz:4,fq:4,cp:2,s10:1},
-      '廖中山':{hz:7,fq:4,cp:2,s10:2}, '张道辉':{hz:4,fq:2,cp:1,s10:1},
-      '江英平':{hz:1,fq:1,cp:0,s10:0}, '潘思毅':{hz:1,fq:1,cp:0,s10:0},
-      '潘进':{hz:2,fq:0,cp:0,s10:0}, '田荣':{hz:4,fq:1,cp:0,s10:0},
-      '石翔':{hz:9,fq:4,cp:1,s10:1}, '姚茂培':{hz:4,fq:4,cp:0,s10:0},
-      '胡明':{hz:2,fq:0,cp:0,s10:0}, '陈光林':{hz:1,fq:1,cp:0,s10:0},
-      '秦美琼':{hz:0,fq:0,cp:0,s10:0}, '姚贤立':{hz:0,fq:0,cp:0,s10:0},
-      '何伟':{hz:0,fq:0,cp:0,s10:0}, '吕明军':{hz:1,fq:1,cp:0,s10:0},
-      '吴大芳':{hz:0,fq:0,cp:0,s10:0}, '姚李明':{hz:2,fq:0,cp:0,s10:0},
-      '张家智':{hz:6,fq:1,cp:0,s10:0}, '金沛':{hz:11,fq:0,cp:0,s10:0},
-    },
-    t159: {
-      '姚金发':{cp:2,s10:2}, '姚鹏':{cp:5,s10:5}, '杨世增':{cp:1,s10:1},
-      '杨斌':{cp:0,s10:0}, '向万强':{cp:3,s10:3}, '姚应波':{cp:2,s10:2},
-      '廖中山':{cp:5,s10:5}, '张道辉':{cp:4,s10:4}, '江英平':{cp:2,s10:2},
-      '潘思毅':{cp:4,s10:4}, '潘进':{cp:3,s10:3}, '田荣':{cp:8,s10:7},
-      '石翔':{cp:4,s10:4}, '陈光林':{cp:0,s10:0}, '吕明军':{cp:1,s10:1},
-      '吴大芳':{cp:1,s10:1}, '姚李明':{cp:1,s10:1}, '张家智':{cp:0,s10:0},
-      '金沛':{cp:2,s10:2},
-    },
-  }
+  my: { people: [] } // 表2502F切换后暂无历史快照
 };
 
 // 自动算增量：当前 - 上次
@@ -362,23 +323,88 @@ Object.keys(CUR_SNAPSHOT.ly).forEach(team => {
   }
 });
 
-// 构建带增量的满意率数据
-const T00 = {}; const T88 = {}; const T159 = {};
-Object.keys(CUR_SNAPSHOT.my.t00).forEach(name => {
-  const c = CUR_SNAPSHOT.my.t00[name]; const p = PREV_SNAPSHOT.my.t00[name];
-  const d = p ? calcDelta(c,p,['fq','cp','s10','my']) : {dfq:0,dcp:0,ds10:0,dmy:0};
-  T00[name] = {...c,...d, rate: c.cp>0?(c.s10/c.cp*100).toFixed(2)+'%':'0.00%'};
-});
-Object.keys(CUR_SNAPSHOT.my.t88).forEach(name => {
-  const c = CUR_SNAPSHOT.my.t88[name]; const p = PREV_SNAPSHOT.my.t88[name];
-  const d = p ? calcDelta(c,p,['hz','fq','cp','s10']) : {dhz:0,dfq:0,dcp:0,ds10:0};
-  T88[name] = {...c,...d, cpr:c.fq>0?(c.cp/c.fq*100).toFixed(2)+'%':'0.00%', s10r:c.cp>0?(c.s10/c.cp*100).toFixed(2)+'%':'0.00%'};
-});
-Object.keys(CUR_SNAPSHOT.my.t159).forEach(name => {
-  const c = CUR_SNAPSHOT.my.t159[name]; const p = PREV_SNAPSHOT.my.t159[name];
-  const d = p ? calcDelta(c,p,['cp','s10']) : {dcp:0,ds10:0};
-  T159[name] = {...c,...d, lz:0,jz:0, cpr:c.cp>0?'100%':'0%', s10r:c.cp>0?(c.s10/c.cp*100).toFixed(2)+'%':'0%', my:0,bmy:0,dmy:0};
-});
+// ===================== 十分满意率看板（表2502F）=====================
+const MY2502F = CUR_SNAPSHOT.my.people;
+const MY_TEAMS_2502F = ['凉伞农村装维','禾滩农村装维','城区装维','支撑人员'];
+let expandExtra = false;
+function n10(a){return a[1]-a[0]} // 非十分满意 = 分母 - 分子
+function n10c(a){
+  if(a[1]===0) return '<span style="color:#ccc">-</span>';
+  const v=n10(a);
+  return v===0?'<span class="ok">0</span>':'<span class="nc">'+v+'</span>';
+}
+function toggleExtraCols(){
+  expandExtra=!expandExtra;
+  const d=expandExtra?'':'none';
+  document.querySelectorAll('.ex-col,.ex-th').forEach(el=>el.style.display=d);
+  document.getElementById('toggle-extra').textContent=expandExtra?'收起支撑/政企/云眼详情':'展开支撑/政企/云眼详情';
+}
+
+(function buildMY(){
+  const colors=['c1','c2','c3','c4'];
+  let tZwFz=0,tZwFm=0,tGzN=0,tKzN=0,tQtzN=0,tSup=0;
+  MY2502F.forEach(p=>{
+    tZwFz+=p.zw[0];tZwFm+=p.zw[1];tGzN+=n10(p.gz);tKzN+=n10(p.kz);tQtzN+=n10(p.qtz);
+    tSup+=n10(p.tyy)+n10(p.bcx)+n10(p.zd)+n10(p.zsh)+n10(p.zkz);
+  });
+  const totalN=tZwFm-tZwFz;
+  const overallR=tZwFm>0?(tZwFz/tZwFm*100).toFixed(2)+'%':'-';
+  const mainN=tGzN+tKzN+tQtzN;
+  document.getElementById('sum-my').innerHTML=`
+    <div class="s-card blue"><div class="lb">装维人员</div><div class="vl">${MY2502F.length}<span style="font-size:13px;color:#999">人</span></div></div>
+    <div class="s-card gray"><div class="lb">装维工单量</div><div class="vl">${tZwFm}</div></div>
+    <div class="s-card red"><div class="lb">非十分满意</div><div class="vl">${totalN}</div></div>
+    <div class="s-card green"><div class="lb">综合10分满意率</div><div class="vl">${overallR}</div></div>
+    <div class="s-card orange"><div class="lb">故障非十分</div><div class="vl">${tGzN}</div></div>
+    <div class="s-card orange"><div class="lb">开通非十分</div><div class="vl">${tKzN}</div></div>
+    <div class="s-card ${tSup>0?'orange':'gray'}"><div class="lb">支撑/政企/云眼非十分</div><div class="vl">${tSup}</div></div>`;
+  const box=document.getElementById('teams-my');
+  box.innerHTML='<button id="toggle-extra" onclick="toggleExtraCols()" style="background:#1a73e8;color:#fff;border:none;border-radius:6px;padding:8px 16px;margin-bottom:10px;cursor:pointer;font-size:13px">展开支撑/政企/云眼详情</button>';
+  function rc(r){if(r==='-'||r==='0.00%')return r;const v=parseFloat(r);if(v>=100)return'<span class="ok-cell">'+r+'</span>';if(v>=90)return'<span class="orange-cell">'+r+'</span>';return'<span class="warn-cell">'+r+'</span>'}
+  function rcls(r){if(r==='-'||r==='0.00%')return'';const v=parseFloat(r);if(v>=100)return'ok';if(v>=90)return'orange';return'warn'}
+  MY_TEAMS_2502F.forEach((tn,ti)=>{
+    const members=MY2502F.filter(p=>p.t===ti);
+    const c=colors[ti]||'c1';
+    let sZf=0,sZm=0,sGz=0,sKz=0,sQtz=0,sTyy=0,sBcx=0,sZd=0,sZsh=0,sZkz=0;
+    members.forEach(p=>{sZf+=p.zw[0];sZm+=p.zw[1];sGz+=n10(p.gz);sKz+=n10(p.kz);sQtz+=n10(p.qtz);sTyy+=n10(p.tyy);sBcx+=n10(p.bcx);sZd+=n10(p.zd);sZsh+=n10(p.zsh);sZkz+=n10(p.zkz)});
+    const sN=sZm-sZf, sR=sZm>0?(sZf/sZm*100).toFixed(2)+'%':'-', sSup=sTyy+sBcx+sZd+sZsh+sZkz;
+    const ed=expandExtra?'':'none';
+    let h=`<div class="team"><div class="team-hd ${c}"><h2>${tn}</h2><div class="ts">`;
+    h+=`工单<b>${sZm}</b> | 非十分满意<b class="${sN>0?'red':'green'}">${sN}</b> | 10分满意率<b class="${rcls(sR)==='ok'?'green':rcls(sR)==='warn'?'red':'orange'}">${sR}</b></div></div>`;
+    h+=`<div style="overflow-x:auto"><table><thead><tr>`;
+    h+=`<th style="text-align:left;padding-left:12px">姓名</th>`;
+    h+=`<th>装维工单10分满意率</th><th>工单量(10分/总)</th>`;
+    h+=`<th>故障非十分</th><th>开通非十分</th><th>其他装非十分</th>`;
+    h+=`<th class="ex-th" style="display:${ed}">天翼云眼</th><th class="ex-th" style="display:${ed}">支撑不满意修复</th><th class="ex-th" style="display:${ed}">支撑主动/前后</th><th class="ex-th" style="display:${ed}">政企售后</th><th class="ex-th" style="display:${ed}">政企开通</th>`;
+    h+=`<th>支撑/政企/云眼</th><th>非十分合计</th>`;
+    h+=`</tr></thead><tbody>`;
+    members.forEach(p=>{
+      const pN=n10(p.zw),pSup=n10(p.tyy)+n10(p.bcx)+n10(p.zd)+n10(p.zsh)+n10(p.zkz);
+      h+=`<tr${ti===3?' class="support-row"':''}>`;
+      h+=`<td class="nm">${p.n}</td>`;
+      h+=`<td class="rt ${rcls(p.r)}">${rc(p.r)}</td>`;
+      h+=`<td>${p.zw[0]}/${p.zw[1]}</td>`;
+      h+=`<td>${n10c(p.gz)}</td><td>${n10c(p.kz)}</td><td>${n10c(p.qtz)}</td>`;
+      h+=`<td class="ex-col" style="display:${ed}">${n10c(p.tyy)}</td><td class="ex-col" style="display:${ed}">${n10c(p.bcx)}</td><td class="ex-col" style="display:${ed}">${n10c(p.zd)}</td><td class="ex-col" style="display:${ed}">${n10c(p.zsh)}</td><td class="ex-col" style="display:${ed}">${n10c(p.zkz)}</td>`;
+      h+=`<td>${pSup>0?'<span class="nc">'+pSup+'</span>':'<span style="color:#ccc">0</span>'}</td>`;
+      h+=`<td class="rt ${pN>0?'warn':'ok'}">${pN}</td></tr>`;
+    });
+    h+=`<tr class="sub-row"><td class="nm">小计</td>`;
+    h+=`<td class="rt ${rcls(sR)}">${rc(sR)}</td><td>${sZf}/${sZm}</td>`;
+    h+=`<td>${sGz>0?'<span class="nc">'+sGz+'</span>':'<span class="ok">0</span>'}</td>`;
+    h+=`<td>${sKz>0?'<span class="nc">'+sKz+'</span>':'<span class="ok">0</span>'}</td>`;
+    h+=`<td>${sQtz>0?'<span class="nc">'+sQtz+'</span>':'<span class="ok">0</span>'}</td>`;
+    h+=`<td class="ex-col" style="display:${ed}">${sTyy>0?'<span class="nc">'+sTyy+'</span>':'<span style="color:#ccc">0</span>'}</td>`;
+    h+=`<td class="ex-col" style="display:${ed}">${sBcx>0?'<span class="nc">'+sBcx+'</span>':'<span style="color:#ccc">0</span>'}</td>`;
+    h+=`<td class="ex-col" style="display:${ed}">${sZd>0?'<span class="nc">'+sZd+'</span>':'<span style="color:#ccc">0</span>'}</td>`;
+    h+=`<td class="ex-col" style="display:${ed}">${sZsh>0?'<span class="nc">'+sZsh+'</span>':'<span style="color:#ccc">0</span>'}</td>`;
+    h+=`<td class="ex-col" style="display:${ed}">${sZkz>0?'<span class="nc">'+sZkz+'</span>':'<span style="color:#ccc">0</span>'}</td>`;
+    h+=`<td>${sSup>0?'<span class="nc">'+sSup+'</span>':'<span style="color:#ccc">0</span>'}</td>`;
+    h+=`<td class="rt ${sN>0?'warn':'ok'}">${sN}</td></tr>`;
+    h+=`</tbody></table></div></div>`;
+    box.innerHTML+=h;
+  });
+})();
 
 (function buildLY() {
   const colors = ['c1','c2','c3','c4'];
@@ -450,130 +476,8 @@ Object.keys(CUR_SNAPSHOT.my.t159).forEach(name => {
   });
 })();
 
-// ===================== 十分满意率看板 =====================
-// 累计(1-6日) + 增量(7月6日 = 1-6日 - 1-5日)
-// T00/T88/T159 已在上方从 CUR_SNAPSHOT/PREV_SNAPSHOT 自动构建（含增量+率值）
 
-const MY_TEAMS = [
-  {name:'凉伞农村装维',members:['姚金发','姚鹏','杨斌','杨世增','杨轶杰','吴先锋']},
-  {name:'禾滩农村装维',members:['金沛','吕明军','张家智','吴大芳','姚李明','何伟']},
-  {name:'城区装维',members:['江英平','姚应波','廖中山','田荣','张道辉','向万强','潘思毅','潘进','石翔','陈光林','姚茂培','胡明']},
-  {name:'支撑人员',members:['秦美琼','姚贤立'],isSupport:true},
-];
 
-function calcPerson(name) {
-  const t00 = T00[name] || null;
-  const t88 = T88[name] || null;
-  const t159 = T159[name] || null;
-  let cp00 = t00 ? t00.cp : 0, s1000 = t00 ? t00.s10 : 0, my00 = t00 ? t00.my : 0;
-  let cp88 = t88 ? t88.cp : 0, s1088 = t88 ? t88.s10 : 0;
-  let cp159 = t159 ? t159.cp : 0, s10159 = t159 ? t159.s10 : 0, my159 = t159 ? (t159.my||0) : 0;
-  // deltas
-  let dcp00 = t00 ? t00.dcp : 0, ds1000 = t00 ? t00.ds10 : 0, dmy00 = t00 ? t00.dmy : 0;
-  let dcp88 = t88 ? t88.dcp : 0, ds1088 = t88 ? t88.ds10 : 0;
-  let dcp159 = t159 ? t159.dcp : 0, ds10159 = t159 ? t159.ds10 : 0, dmy159 = t159 ? (t159.dmy||0) : 0;
-
-  let totalCp = cp00 + cp88 + cp159, totalS10 = s1000 + s1088 + s10159, totalMy = my00 + my159;
-  let dtotalCp = dcp00 + dcp88 + dcp159, dtotalS10 = ds1000 + ds1088 + ds10159, dtotalMy = dmy00 + dmy159;
-  let combinedRate = totalCp > 0 ? (totalS10 / totalCp * 100).toFixed(2) + '%' : '-';
-  // rate delta
-  let prevCp = totalCp - dtotalCp, prevS10 = totalS10 - dtotalS10;
-  let rateDelta = (totalCp > 0 && prevCp > 0) ? (totalS10/totalCp*100 - prevS10/prevCp*100) : 0;
-
-  return { t00, t88, t159, totalCp, totalS10, combinedRate, totalMy, dtotalCp, dtotalS10, dtotalMy, rateDelta };
-}
-
-(function buildMY() {
-  const colors = ['c1','c2','c3','c4'];
-  let totalFq = 0, totalCp = 0, totalS10 = 0, totalMy = 0;
-  let dtotalFq = 0, dtotalCp = 0, dtotalS10 = 0, dtotalMy = 0;
-  MY_TEAMS.forEach(team => {
-    team.members.forEach(name => {
-      const d = calcPerson(name);
-      totalCp += d.totalCp; totalS10 += d.totalS10; totalMy += d.totalMy;
-      dtotalCp += d.dtotalCp; dtotalS10 += d.dtotalS10; dtotalMy += d.dtotalMy;
-      if (d.t00) { totalFq += d.t00.fq; dtotalFq += d.t00.dfq; }
-      if (d.t88) { totalFq += d.t88.fq; dtotalFq += d.t88.dfq; }
-    });
-  });
-  const overallS10Rate = totalCp > 0 ? (totalS10 / totalCp * 100).toFixed(2) + '%' : '-';
-  const prevCp = totalCp - dtotalCp, prevS10 = totalS10 - dtotalS10;
-  const rateDelta = (totalCp > 0 && prevCp > 0) ? (totalS10/totalCp*100 - prevS10/prevCp*100) : 0;
-
-  document.getElementById('sum-my').innerHTML = `
-    <div class="s-card blue"><div class="lb">装维人员</div><div class="vl">${MY_TEAMS.reduce((s,t)=>s+t.members.length,0)}<span style="font-size:13px;color:#999">人</span></div></div>
-    <div class="s-card gray"><div class="lb">发起参评(00+88)</div><div class="vl">${totalFq}${dl(dtotalFq)}</div></div>
-    <div class="s-card orange"><div class="lb">参评量(00+88+159)</div><div class="vl">${totalCp}${dl(dtotalCp)}</div></div>
-    <div class="s-card green"><div class="lb">10分满意量</div><div class="vl">${totalS10}${dl(dtotalS10)}</div></div>
-    <div class="s-card red"><div class="lb">满意(非10分)</div><div class="vl">${totalMy}${dl(dtotalMy,true)}</div></div>
-    <div class="s-card blue"><div class="lb">综合10分满意率</div><div class="vl">${overallS10Rate}${dlPct(rateDelta)}</div></div>
-  `;
-
-  const box = document.getElementById('teams-my');
-  function rateClass(r) { if (r==='-'||r==='0.00%') return ''; const v=parseFloat(r); if(v>=100) return 'ok'; if(v>=90) return 'orange'; return 'warn'; }
-  function rc(r) { const c=rateClass(r); return `<span class="${c?c+'-cell':''}">${r}</span>`; }
-
-  MY_TEAMS.forEach((team, ti) => {
-    const c = colors[ti] || 'c1';
-    let html = `<div class="team"><div class="team-hd ${c}"><h2>${team.name}</h2><div class="ts">`;
-    let teamCp=0, teamS10=0, dtCp=0, dtS10=0;
-    team.members.forEach(name => { const d=calcPerson(name); teamCp+=d.totalCp; teamS10+=d.totalS10; dtCp+=d.dtotalCp; dtS10+=d.dtotalS10; });
-    const teamRate = teamCp > 0 ? (teamS10 / teamCp * 100).toFixed(2) + '%' : '-';
-    const tc = rateClass(teamRate);
-    const prevTCp = teamCp - dtCp, prevTS10 = teamS10 - dtS10;
-    const teamRateDelta = (teamCp > 0 && prevTCp > 0) ? (teamS10/teamCp*100 - prevTS10/prevTCp*100) : 0;
-    html += `参评<b>${teamCp}</b>${dl(dtCp)} | 10分满意<b>${teamS10}</b>${dl(dtS10)} | 10分满意率<b class="${tc==='ok'?'green':tc==='orange'?'orange':tc==='warn'?'red':''}">${teamRate}</b>${dlPct(teamRateDelta)}</div></div>`;
-
-    if (team.isSupport) {
-      html += `<table><thead><tr><th style="text-align:left;padding-left:12px">姓名</th><th>表88回单</th><th>表88发起参评</th><th>表88参评</th><th>表88 10分满意</th><th>表88参评率</th><th>表88 10分满意率</th></tr></thead><tbody>`;
-      team.members.forEach(name => {
-        const d = calcPerson(name);
-        if (d.t88) { html += `<tr class="support-row"><td class="nm">${name}</td><td>${d.t88.hz}${dl(d.t88.dhz)}</td><td>${d.t88.fq}${dl(d.t88.dfq)}</td><td>${d.t88.cp}${dl(d.t88.dcp)}</td><td>${d.t88.s10}${dl(d.t88.ds10)}</td><td>${rc(d.t88.cpr)}</td><td>${rc(d.t88.s10r)}</td></tr>`; }
-        else { html += `<tr class="support-row"><td class="nm">${name}</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>`; }
-      });
-      html += `</tbody></table>`;
-    } else {
-      html += `<table><thead><tr>`;
-      html += `<th style="text-align:left;padding-left:12px">姓名</th>`;
-      html += `<th>00发起参评</th><th>00参评</th><th>00 10分满意</th><th>00满意率</th>`;
-      html += `<th>88回单</th><th>88发起参评</th><th>88参评</th><th>88 10分满意</th><th>88参评率</th><th>88 10分满意率</th>`;
-      html += `<th>159参评</th><th>159 10分满意</th><th>159满意率</th>`;
-      html += `<th>合并参评</th><th>合并10分满意</th><th>综合10分满意率</th>`;
-      html += `</tr></thead><tbody>`;
-      team.members.forEach(name => {
-        const d = calcPerson(name);
-        html += `<tr><td class="nm">${name}</td>`;
-        if (d.t00) { html += `<td>${d.t00.fq}${dl(d.t00.dfq)}</td><td>${d.t00.cp}${dl(d.t00.dcp)}</td><td>${d.t00.s10}${dl(d.t00.ds10)}</td><td>${rc(d.t00.rate)}</td>`; }
-        else { html += `<td>-</td><td>-</td><td>-</td><td>-</td>`; }
-        if (d.t88) { html += `<td>${d.t88.hz}${dl(d.t88.dhz)}</td><td>${d.t88.fq}${dl(d.t88.dfq)}</td><td>${d.t88.cp}${dl(d.t88.dcp)}</td><td>${d.t88.s10}${dl(d.t88.ds10)}</td><td>${rc(d.t88.cpr)}</td><td>${rc(d.t88.s10r)}</td>`; }
-        else { html += `<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>`; }
-        if (d.t159) { html += `<td>${d.t159.cp}${dl(d.t159.dcp)}</td><td>${d.t159.s10}${dl(d.t159.ds10)}</td><td>${rc(d.t159.s10r)}</td>`; }
-        else { html += `<td>-</td><td>-</td><td>-</td>`; }
-        html += `<td><b>${d.totalCp}</b>${dl(d.dtotalCp)}</td><td><b>${d.totalS10}</b>${dl(d.dtotalS10)}</td><td class="rt ${rateClass(d.combinedRate)}">${rc(d.combinedRate)}${dlPct(d.rateDelta)}</td></tr>`;
-      });
-      // 小计
-      let t00fq=0,t00cp=0,t00s10=0,dt00fq=0,dt00cp=0,dt00s10=0;
-      let t88fq=0,t88cp=0,t88s10=0,dt88fq=0,dt88cp=0,dt88s10=0;
-      let t159cp=0,t159s10=0,dt159cp=0,dt159s10=0;
-      team.members.forEach(n=>{
-        const d0=T00[n];if(d0){t00fq+=d0.fq;t00cp+=d0.cp;t00s10+=d0.s10;dt00fq+=d0.dfq;dt00cp+=d0.dcp;dt00s10+=d0.ds10}
-        const d2=T88[n];if(d2){t88fq+=d2.fq;t88cp+=d2.cp;t88s10+=d2.s10;dt88fq+=d2.dfq;dt88cp+=d2.dcp;dt88s10+=d2.ds10}
-        const d1=T159[n];if(d1){t159cp+=d1.cp;t159s10+=d1.s10;dt159cp+=d1.dcp;dt159s10+=d1.ds10}
-      });
-      const t00rate = t00cp > 0 ? (t00s10/t00cp*100).toFixed(2)+'%' : '-';
-      const t88rate = t88cp > 0 ? (t88s10/t88cp*100).toFixed(2)+'%' : '-';
-      const t88cpr = t88fq > 0 ? (t88cp/t88fq*100).toFixed(2)+'%' : '-';
-      const t159rate = t159cp > 0 ? (t159s10/t159cp*100).toFixed(2)+'%' : '-';
-      html += `<tr class="sub-row"><td class="nm">小计</td>`;
-      html += `<td>${t00fq}${dl(dt00fq)}</td><td>${t00cp}${dl(dt00cp)}</td><td>${t00s10}${dl(dt00s10)}</td><td>${rc(t00rate)}</td>`;
-      html += `<td>-</td><td>${t88fq}${dl(dt88fq)}</td><td>${t88cp}${dl(dt88cp)}</td><td>${t88s10}${dl(dt88s10)}</td><td>${rc(t88cpr)}</td><td>${rc(t88rate)}</td>`;
-      html += `<td>${t159cp}${dl(dt159cp)}</td><td>${t159s10}${dl(dt159s10)}</td><td>${rc(t159rate)}</td>`;
-      html += `<td><b>${teamCp}</b>${dl(dtCp)}</td><td><b>${teamS10}</b>${dl(dtS10)}</td><td class="rt ${rateClass(teamRate)}">${rc(teamRate)}${dlPct(teamRateDelta)}</td></tr>`;
-      html += `</tbody></table>`;
-    }
-    html += `</div>`; box.innerHTML += html;
-  });
-})();
 
 // ===================== 重复故障看板 =====================
 // 7月重复故障数据（90天内重复报障，按第一次报障时责任人归责）
