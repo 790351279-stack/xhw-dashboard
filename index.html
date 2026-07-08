@@ -93,6 +93,20 @@ tr:hover{background:#f8faff}
 .fb-badge{display:inline-block;background:#1a73e8;color:#fff;border-radius:50%;width:16px;height:16px;font-size:10px;line-height:16px;text-align:center;vertical-align:middle;margin-left:4px;cursor:pointer}
 .cf-row{cursor:pointer;transition:background .15s}
 .cf-row:hover{background:#e8f0fe!important}
+/* 异常变动看板样式 */
+.ab-section{background:#fff;border-radius:8px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden}
+.ab-section-hd{padding:10px 16px;border-left:4px solid #ea4335;font-size:15px;font-weight:bold;color:#333;background:#fff5f5}
+.ab-section-hd.blue{border-left-color:#1a73e8;background:#f0f4ff}
+.ab-section-hd.orange{border-left-color:#f9ab00;background:#fff8e6}
+.ab-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;margin-left:6px;font-weight:normal}
+.ab-tag.red{background:#ea4335;color:#fff}
+.ab-tag.orange{background:#f9ab00;color:#333}
+.ab-tag.blue{background:#1a73e8;color:#fff}
+.rate-bar{display:inline-block;height:14px;border-radius:2px;vertical-align:middle}
+.rate-bar.bg{background:#e8eaed;width:60px}
+.rate-bar.fg{background:#ea4335}
+.rate-bar.fg.low{background:#f9ab00}
+.rate-bar.fg.good{background:#34a853}
 </style>
 </head>
 <body>
@@ -105,6 +119,7 @@ tr:hover{background:#f8faff}
   <button class="tab-btn active" onclick="switchTab('ly')">履约率看板</button>
   <button class="tab-btn" onclick="switchTab('my')">十分满意率看板</button>
   <button class="tab-btn" onclick="switchTab('cf')">重复故障看板</button>
+  <button class="tab-btn" onclick="switchTab('ab')">异常变动看板</button>
 </div>
 
 <div id="tab-ly" class="tab-content active">
@@ -120,6 +135,11 @@ tr:hover{background:#f8faff}
 <div id="tab-cf" class="tab-content">
   <div class="summary" id="sum-cf"></div>
   <div id="teams-cf"></div>
+</div>
+
+<div id="tab-ab" class="tab-content">
+  <div class="summary" id="sum-ab"></div>
+  <div id="teams-ab"></div>
 </div>
 
 <!-- 反馈模态框 -->
@@ -695,6 +715,214 @@ function renderCfBadges() {
     html += `</tbody></table></div>`;
     box.innerHTML += html;
   });
+})();
+
+// ===================== 表25049 90天不含PCDN重复故障率 =====================
+const REP_DATA = [
+  {n:'姚金发',t:0,gz:5,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:5,noPcdnRate:'0.00%'},
+  {n:'姚鹏',t:0,gz:4,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:4,noPcdnRate:'0.00%'},
+  {n:'杨世增',t:0,gz:6,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:6,noPcdnRate:'0.00%'},
+  {n:'杨斌',t:0,gz:10,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:10,noPcdnRate:'0.00%'},
+  {n:'杨轶杰',t:0,gz:4,cf:4,cfRate:'100.00%',cfNoPcdn:4,gzNoPcdn:4,noPcdnRate:'100.00%'},
+  {n:'向万强',t:2,gz:10,cf:1,cfRate:'10.00%',cfNoPcdn:1,gzNoPcdn:10,noPcdnRate:'10.00%'},
+  {n:'姚应波',t:2,gz:7,cf:1,cfRate:'14.29%',cfNoPcdn:0,gzNoPcdn:6,noPcdnRate:'0.00%'},
+  {n:'姚茂培',t:2,gz:4,cf:3,cfRate:'75.00%',cfNoPcdn:3,gzNoPcdn:4,noPcdnRate:'75.00%'},
+  {n:'廖中山',t:2,gz:16,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:15,noPcdnRate:'0.00%'},
+  {n:'张道辉',t:2,gz:17,cf:1,cfRate:'5.88%',cfNoPcdn:1,gzNoPcdn:17,noPcdnRate:'5.88%'},
+  {n:'江英平',t:2,gz:7,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:6,noPcdnRate:'0.00%'},
+  {n:'潘思毅',t:2,gz:9,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:8,noPcdnRate:'0.00%'},
+  {n:'潘进',t:2,gz:2,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:2,noPcdnRate:'0.00%'},
+  {n:'田荣',t:2,gz:5,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:5,noPcdnRate:'0.00%'},
+  {n:'石翔',t:2,gz:6,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:6,noPcdnRate:'0.00%'},
+  {n:'胡明',t:2,gz:2,cf:1,cfRate:'50.00%',cfNoPcdn:1,gzNoPcdn:2,noPcdnRate:'50.00%'},
+  {n:'陈光林',t:2,gz:2,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:2,noPcdnRate:'0.00%'},
+  {n:'张勇',t:3,gz:2,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:2,noPcdnRate:'0.00%'},
+  {n:'杨光伟',t:1,gz:1,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:1,noPcdnRate:'0.00%'},
+  {n:'吴大芳',t:1,gz:5,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:5,noPcdnRate:'0.00%'},
+  {n:'张家智',t:1,gz:1,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:1,noPcdnRate:'0.00%'},
+  {n:'姚芳燕',t:3,gz:1,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:1,noPcdnRate:'0.00%'},
+  {n:'秦美琼',t:3,gz:1,cf:1,cfRate:'100.00%',cfNoPcdn:1,gzNoPcdn:1,noPcdnRate:'100.00%'},
+];
+const TEAM_NAMES_AB = ['凉伞农村装维','禾滩农村装维','城区装维','支撑人员'];
+const TEAM_COLORS_AB = ['c1','c2','c3','c4'];
+
+(function buildAB() {
+  // 从CUR_SNAPSHOT提取昨日异常工单变动
+  const cur = CUR_SNAPSHOT;
+  const prev = PREV_SNAPSHOT;
+
+  // 计算履约率异常变动（不履约增量）
+  function calcLyDelta(teamName) {
+    const cd = cur.ly[teamName];
+    const pd = prev.ly[teamName];
+    if (!cd || !pd) return [];
+    if (!Array.isArray(cd) || !Array.isArray(pd)) return []; // 支撑人员跳过
+    const result = [];
+    cd.forEach(cr => {
+      const pr = pd.find(x => x.name === cr.name);
+      if (!pr) return;
+      const curBad = cr.ib + cr.rb + cr.sb;
+      const prevBad = pr.ib + pr.rb + pr.sb;
+      const delta = curBad - prevBad;
+      if (delta > 0) {
+        result.push({
+          name: cr.name,
+          type: '不履约+' + delta,
+          detail: '装机不履约' + (cr.ib - pr.ib > 0 ? '+' + (cr.ib - pr.ib) : '0') + ' 修障不履约' + (cr.rb - pr.rb > 0 ? '+' + (cr.rb - pr.rb) : '0') + ' 支撑不履约' + (cr.sb - pr.sb > 0 ? '+' + (cr.sb - pr.sb) : '0'),
+          delta: delta,
+          tag: 'red'
+        });
+      }
+    });
+    return result;
+  }
+
+  // 计算十分满意率异常变动（非十分满意增量）
+  function calcMyDelta() {
+    const people = cur.my.people;
+    // 十分满意率没有prev增量数据，简化处理：标记非十分满意>0的人员
+    const result = [];
+    people.forEach(p => {
+      if (p.t === 3) return; // 支撑人员跳过
+      const zwNot10 = p.zw[1] - p.zw[0]; // 装维工单非十分满意数
+      if (zwNot10 > 0) {
+        const items = [];
+        if (p.gz[1] - p.gz[0] > 0) items.push('故障' + (p.gz[1] - p.gz[0]));
+        if (p.kz[1] - p.kz[0] > 0) items.push('开通' + (p.kz[1] - p.kz[0]));
+        if (p.qtz[1] - p.qtz[0] > 0) items.push('其他装' + (p.qtz[1] - p.qtz[0]));
+        if (p.tyy[1] - p.tyy[0] > 0) items.push('云眼' + (p.tyy[1] - p.tyy[0]));
+        if (p.zsh[1] - p.zsh[0] > 0) items.push('政企售后' + (p.zsh[1] - p.zsh[0]));
+        if (p.zd[1] - p.zd[0] > 0) items.push('主动' + (p.zd[1] - p.zd[0]));
+        if (p.zkz[1] - p.zkz[0] > 0) items.push('政企开通' + (p.zkz[1] - p.zkz[0]));
+        if (p.bcx[1] - p.bcx[0] > 0) items.push('不满意修复' + (p.bcx[1] - p.bcx[0]));
+        result.push({
+          name: p.n,
+          team: p.t,
+          rate: p.r,
+          not10: zwNot10,
+          items: items
+        });
+      }
+    });
+    return result;
+  }
+
+  // ========== 渲染汇总卡片 ==========
+  const lyDeltas = {};
+  TEAM_NAMES_AB.forEach(tn => { lyDeltas[tn] = calcLyDelta(tn); });
+  const myDeltas = calcMyDelta();
+
+  const totalLyAbnormal = Object.values(lyDeltas).reduce((s, arr) => s + arr.length, 0);
+  const totalMyAbnormal = myDeltas.length;
+  const totalRepRate = REP_DATA.length > 0 ? REP_DATA.reduce((s, d) => s + d.cfNoPcdn, 0) : 0;
+  const totalGzNoPcdn = REP_DATA.length > 0 ? REP_DATA.reduce((s, d) => s + d.gzNoPcdn, 0) : 0;
+  const overallNoPcdnRate = totalGzNoPcdn > 0 ? (totalRepRate / totalGzNoPcdn * 100).toFixed(2) + '%' : '-';
+
+  document.getElementById('sum-ab').innerHTML = `
+    <div class="s-card red"><div class="lb">昨日不履约变动</div><div class="vl">${totalLyAbnormal}<span style="font-size:13px;color:#999">人</span></div></div>
+    <div class="s-card orange"><div class="lb">非十分满意</div><div class="vl">${totalMyAbnormal}<span style="font-size:13px;color:#999">人</span></div></div>
+    <div class="s-card blue"><div class="lb">90天不含PCDN<br>重复故障率</div><div class="vl" style="font-size:22px">${overallNoPcdnRate}</div></div>
+    <div class="s-card gray"><div class="lb">重复故障人数</div><div class="vl">${REP_DATA.filter(d => d.cfNoPcdn > 0).length}<span style="font-size:13px;color:#999">人</span></div></div>
+  `;
+
+  const box = document.getElementById('teams-ab');
+
+  // ========== Section 1: 昨日异常工单变动表 ==========
+  let html = `<div class="ab-section">`;
+  html += `<div class="ab-section-hd">昨日异常工单变动 <span class="ab-tag red">不履约增量</span> <span class="ab-tag orange">非十分满意</span></div>`;
+
+  // 不履约增量
+  const allLyItems = [];
+  TEAM_NAMES_AB.forEach((tn, ti) => {
+    lyDeltas[tn].forEach(d => {
+      allLyItems.push({ ...d, team: tn, teamIdx: ti });
+    });
+  });
+
+  if (allLyItems.length > 0) {
+    html += `<div style="padding:8px 16px;background:#fff5f5;border-bottom:1px solid #f0e0d0;font-size:13px"><b style="color:#ea4335">不履约增量人员：</b>`;
+    allLyItems.forEach((d, i) => {
+      html += `${i > 0 ? ' | ' : ''}<span style="color:#ea4335;font-weight:bold">${d.name}(${d.type})</span>`;
+    });
+    html += `</div>`;
+  }
+
+  // 非十分满意人员表格
+  html += `<div style="padding:8px 16px;background:#fff8e6;border-bottom:1px solid #f0e0d0;font-size:13px"><b style="color:#f9ab00">非十分满意人员：</b>按装维工单10分满意率排序</div>`;
+
+  html += `<table><thead><tr>`;
+  html += `<th style="text-align:left;padding-left:12px">姓名</th>`;
+  html += `<th>片区</th><th>满意率</th><th>非十分满意数</th><th>异常类型</th>`;
+  html += `</tr></thead><tbody>`;
+
+  // 按满意率从低到高排序
+  myDeltas.sort((a, b) => {
+    const ra = parseFloat(a.rate) || 100;
+    const rb = parseFloat(b.rate) || 100;
+    return ra - rb;
+  });
+
+  myDeltas.forEach(d => {
+    const rateNum = parseFloat(d.rate) || 100;
+    const rc = rateNum < 90 ? 'warn' : rateNum < 95 ? 'orange' : '';
+    html += `<tr>`;
+    html += `<td class="nm">${d.name}</td>`;
+    html += `<td style="font-size:12px;color:#5f6368">${TEAM_NAMES_AB[d.team]}</td>`;
+    html += `<td class="rt ${rc}">${d.rate}</td>`;
+    html += `<td style="color:#ea4335;font-weight:bold">${d.not10}</td>`;
+    html += `<td style="font-size:12px">${d.items.map(i => '<span class="ab-tag orange">' + i + '</span>').join(' ')}</td>`;
+    html += `</tr>`;
+  });
+
+  html += `</tbody></table></div>`;
+
+  // ========== Section 2: 90天不含PCDN重复故障率 ==========
+  html += `<div class="ab-section">`;
+  html += `<div class="ab-section-hd blue">90天不含PCDN重复故障率 <span class="ab-tag blue">表25049 宽带+IPTV</span></div>`;
+
+  // 只显示有重复故障的人 + 按片区分组
+  TEAM_NAMES_AB.forEach((tn, ti) => {
+    const members = REP_DATA.filter(d => d.t === ti);
+    if (members.length === 0) return;
+
+    const hasCf = members.some(d => d.cfNoPcdn > 0);
+    const c = TEAM_COLORS_AB[ti];
+    html += `<div class="team"><div class="team-hd ${c}"><h2>${tn}</h2><div class="ts">`;
+    const teamGz = members.reduce((s, d) => s + d.gzNoPcdn, 0);
+    const teamCf = members.reduce((s, d) => s + d.cfNoPcdn, 0);
+    const teamRate = teamGz > 0 ? (teamCf / teamGz * 100).toFixed(2) + '%' : '-';
+    html += `不含PCDN竣工<b>${teamGz}</b>户 | 重复<b class="${teamCf > 0 ? 'red' : 'green'}">${teamCf}</b>户 | 不含PCDN重复率<b class="${teamCf > 0 ? 'red' : 'green'}">${teamRate}</b>`;
+    html += `</div></div>`;
+
+    html += `<table><thead><tr>`;
+    html += `<th style="text-align:left;padding-left:12px">姓名</th>`;
+    html += `<th>故障竣工(不含PCDN)</th><th>90天重复用户数</th><th>不含PCDN重复故障率</th><th>故障分布</th>`;
+    html += `</tr></thead><tbody>`;
+
+    members.forEach(d => {
+      const rateNum = parseFloat(d.noPcdnRate) || 0;
+      const rc = rateNum > 0 ? (rateNum >= 50 ? 'warn' : 'orange') : 'ok';
+      // 从原始数据计算故障分布
+      const dist = [];
+      // 使用REP_DATA的扩展信息
+      html += `<tr${d.cfNoPcdn > 0 ? ' style="background:#fff5f5"' : ''}>`;
+      html += `<td class="nm">${d.n}</td>`;
+      html += `<td>${d.gzNoPcdn}</td>`;
+      html += `<td style="color:${d.cfNoPcdn > 0 ? '#ea4335' : '#ccc'};font-weight:${d.cfNoPcdn > 0 ? 'bold' : 'normal'}">${d.cfNoPcdn}</td>`;
+      // 重复故障率带进度条
+      const barW = Math.min(rateNum, 100);
+      const barCls = rateNum === 0 ? 'good' : rateNum < 20 ? 'low' : '';
+      html += `<td class="rt ${rc}">${d.noPcdnRate} <span class="rate-bar bg"><span class="rate-bar fg ${barCls}" style="width:${barW}%"></span></span></td>`;
+      html += `<td style="font-size:12px;color:#5f6368">${d.cfRate === d.noPcdnRate ? '-' : '含PCDN:' + d.cfRate}</td>`;
+      html += `</tr>`;
+    });
+
+    html += `</tbody></table></div>`;
+  });
+
+  html += `</div>`;
+
+  box.innerHTML = html;
 })();
 
 // 点击模态框外关闭
