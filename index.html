@@ -98,7 +98,7 @@ tr:hover{background:#f8faff}
 <body>
 <div class="header">
   <h1>新晃县装维综合看板</h1>
-  <div class="sub">统计周期：2026年7月1日-6日 | <b>昨日新增：7月6日</b></div>
+  <div class="sub">统计周期：2026年7月1日-7日 | <b>昨日新增：7月7日</b></div>
 </div>
 
 <div class="tab-bar">
@@ -186,7 +186,7 @@ function dlPct(v) {
 // 当前累计数据（7月1日-6日）—— 每天取数后更新此区域
 // 增量由下方PREV_SNAPSHOT自动计算，不需要手动填
 const CUR_SNAPSHOT = {
-  date: '2026-07-06', // 数据截止日期
+  date: '2026-07-07', // 数据截止日期
   ly: { // 履约率数据
     '凉伞农村装维': [
       {name:'姚金发',iz:18,ib:0,rz:4,rb:0,sz:1,sb:0},
@@ -223,8 +223,9 @@ const CUR_SNAPSHOT = {
   },
   my: { // 表2502F 十分满意率数据（data source switched）
     people: [
-      // 凉伞农村装维 (t=0)  zw=[分子,分母] gz=故障 kz=开通 qtz=其他装 tyy=天翼云眼 bcx=支撑不满意修复 zd=支撑主动/前后 zsh=政企售后 zkz=政企开通
-      {n:'吴先锋',t:0,r:'-',zw:[0,0],gz:[0,0],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+
+    ]
+  },
       {n:'姚金发',t:0,r:'89.47%',zw:[17,19],gz:[2,2],kz:[12,13],qtz:[2,2],tyy:[0,0],bcx:[0,0],zd:[1,2],zsh:[0,0],zkz:[2,2]},
       {n:'姚鹏',t:0,r:'100.00%',zw:[12,12],gz:[4,4],kz:[3,3],qtz:[5,5],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
       {n:'杨世增',t:0,r:'85.71%',zw:[6,7],gz:[4,4],kz:[1,1],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[0,1],zsh:[0,0],zkz:[0,0]},
