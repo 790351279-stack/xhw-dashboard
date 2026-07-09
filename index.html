@@ -112,7 +112,7 @@ tr:hover{background:#f8faff}
 <body>
 <div class="header">
   <h1>新晃县装维综合看板</h1>
-  <div class="sub">统计周期：2026年7月1日-7日 | <b>昨日新增：7月7日</b></div>
+  <div class="sub" id="header-sub">统计周期：加载中...</div>
 </div>
 
 <div class="tab-bar">
@@ -291,6 +291,15 @@ const PREV_SNAPSHOT = {
     ]
   }
 };
+
+// 动态更新标题
+(function() {
+  const d = CUR_SNAPSHOT.date; // e.g. '2026-07-08'
+  const parts = d.split('-');
+  const endDay = parseInt(parts[2]);
+  document.getElementById('header-sub').innerHTML =
+    '统计周期：2026年7月1日-' + endDay + '日 | 昨日新增：7月' + endDay + '日';
+})();
 
 // 自动算增量：当前 - 上次
 function calcDelta(cur, prev, keys) {
