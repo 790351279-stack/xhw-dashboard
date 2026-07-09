@@ -203,9 +203,53 @@ function dlPct(v) {
 
 // ===================== 履约率看板 =====================
 // ===================== 数据区（每次更新只改这里）=====================
-// 当前累计数据（7月1日-6日）—— 每天取数后更新此区域
+// 当前累计数据（7月1日-8日）—— 每天取数后更新此区域
 // 增量由下方PREV_SNAPSHOT自动计算，不需要手动填
 const CUR_SNAPSHOT = {
+  date: '2026-07-08', // 数据截止日期
+  ly: { // 履约率数据
+    '凉伞农村装维': [{name:'姚金发',iz:24,ib:0,rz:6,rb:0,sz:14,sb:13},{name:'姚鹏',iz:11,ib:0,rz:4,rb:0,sz:15,sb:9},{name:'杨斌',iz:6,ib:0,rz:12,rb:0,sz:16,sb:10},{name:'杨世增',iz:9,ib:0,rz:6,rb:0,sz:52,sb:51},{name:'杨轶杰',iz:2,ib:0,rz:5,rb:0,sz:2,sb:1},{name:'吴先锋',iz:4,ib:0,rz:1,rb:0,sz:20,sb:15}],
+    '禾滩农村装维': [{name:'金沛',iz:8,ib:0,rz:0,rb:0,sz:9,sb:0},{name:'吕明军',iz:8,ib:0,rz:0,rb:0,sz:10,sb:8},{name:'张家智',iz:7,ib:0,rz:2,rb:0,sz:12,sb:5},{name:'吴大芳',iz:5,ib:0,rz:6,rb:0,sz:11,sb:9},{name:'姚李明',iz:15,ib:0,rz:3,rb:0,sz:14,sb:11},{name:'何伟',iz:0,ib:0,rz:1,rb:0,sz:5,sb:0},{name:'杨光伟',iz:0,ib:0,rz:1,rb:0,sz:0,sb:0}],
+    '城区装维': [{name:'江英平',iz:45,ib:0,rz:8,rb:0,sz:16,sb:13},{name:'姚应波',iz:35,ib:1,rz:7,rb:0,sz:23,sb:14},{name:'廖中山',iz:45,ib:0,rz:21,rb:0,sz:35,sb:21},{name:'田荣',iz:30,ib:0,rz:7,rb:0,sz:19,sb:15},{name:'张道辉',iz:33,ib:2,rz:22,rb:0,sz:31,sb:19},{name:'向万强',iz:25,ib:0,rz:12,rb:0,sz:31,sb:17},{name:'潘思毅',iz:17,ib:0,rz:8,rb:0,sz:32,sb:31},{name:'潘进',iz:20,ib:0,rz:2,rb:0,sz:19,sb:17},{name:'石翔',iz:19,ib:0,rz:8,rb:0,sz:38,sb:26},{name:'陈光林',iz:18,ib:0,rz:2,rb:0,sz:20,sb:7},{name:'姚茂培',iz:0,ib:0,rz:4,rb:0,sz:19,sb:15},{name:'胡明',iz:0,ib:0,rz:2,rb:1,sz:0,sb:0}],
+    '支撑人员': {iz:2,ib:2,rz:2,rb:0,sz:0,sb:0},
+  },
+  my: { // 表2502F 十分满意率数据
+    people: [
+      {n:'姚金发',t:0,r:'90.48%',zw:[19,21],gz:[4,4],kz:[12,13],qtz:[2,2],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[1,2]},
+      {n:'姚鹏',t:0,r:'100.00%',zw:[12,12],gz:[4,4],kz:[3,3],qtz:[5,5],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'杨斌',t:0,r:'92.86%',zw:[13,14],gz:[7,8],kz:[6,6],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'杨世增',t:0,r:'85.71%',zw:[6,7],gz:[4,4],kz:[1,1],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[0,1],zsh:[0,0],zkz:[0,0]},
+      {n:'杨轶杰',t:0,r:'100.00%',zw:[5,5],gz:[4,4],kz:[0,0],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'吴先锋',t:0,r:'100.00%',zw:[2,2],gz:[1,1],kz:[1,1],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'金沛',t:1,r:'100.00%',zw:[9,9],gz:[0,0],kz:[7,7],qtz:[2,2],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'吕明军',t:1,r:'100.00%',zw:[8,8],gz:[0,0],kz:[6,6],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[1,1]},
+      {n:'张家智',t:1,r:'100.00%',zw:[2,2],gz:[1,1],kz:[0,0],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'吴大芳',t:1,r:'100.00%',zw:[8,8],gz:[6,6],kz:[1,1],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'姚李明',t:1,r:'92.31%',zw:[12,13],gz:[2,2],kz:[8,8],qtz:[2,3],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'何伟',t:1,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'杨光伟',t:1,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'江英平',t:2,r:'97.06%',zw:[33,34],gz:[5,6],kz:[25,25],qtz:[3,3],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'姚应波',t:2,r:'93.94%',zw:[31,33],gz:[4,4],kz:[19,19],qtz:[4,4],tyy:[0,0],bcx:[0,0],zd:[2,3],zsh:[0,0],zkz:[2,3]},
+      {n:'廖中山',t:2,r:'98.15%',zw:[53,54],gz:[18,18],kz:[23,23],qtz:[8,9],tyy:[0,0],bcx:[0,0],zd:[2,2],zsh:[0,0],zkz:[2,2]},
+      {n:'田荣',t:2,r:'90.32%',zw:[28,31],gz:[3,5],kz:[18,18],qtz:[7,8],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'张道辉',t:2,r:'94.59%',zw:[35,37],gz:[19,20],kz:[7,8],qtz:[6,6],tyy:[0,0],bcx:[0,0],zd:[3,3],zsh:[0,0],zkz:[0,0]},
+      {n:'向万强',t:2,r:'86.36%',zw:[19,22],gz:[4,6],kz:[10,10],qtz:[4,4],tyy:[0,0],bcx:[0,0],zd:[1,2],zsh:[0,0],zkz:[0,0]},
+      {n:'潘思毅',t:2,r:'100.00%',zw:[20,20],gz:[7,7],kz:[5,5],qtz:[5,5],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[3,3]},
+      {n:'潘进',t:2,r:'87.50%',zw:[14,16],gz:[1,1],kz:[9,10],qtz:[3,3],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[1,2]},
+      {n:'石翔',t:2,r:'95.45%',zw:[21,22],gz:[7,8],kz:[6,6],qtz:[6,6],tyy:[0,0],bcx:[0,0],zd:[2,2],zsh:[0,0],zkz:[0,0]},
+      {n:'陈光林',t:2,r:'100.00%',zw:[14,14],gz:[2,2],kz:[8,8],qtz:[2,2],tyy:[0,0],bcx:[0,0],zd:[1,1],zsh:[0,0],zkz:[1,1]},
+      {n:'姚茂培',t:2,r:'100.00%',zw:[3,3],gz:[3,3],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'胡明',t:2,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'张勇',t:3,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'姚芳燕',t:3,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'秦美琼',t:3,r:'-',zw:[0,0],gz:[0,0],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},
+      {n:'张星辰',t:3,r:'100.00%',zw:[1,1],gz:[0,0],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[1,1],zkz:[0,0]}
+    ]
+  }
+};
+
+// 上一次快照（7月1日-7日数据）—— 更新看板时，把CUR_SNAPSHOT的旧值复制到这里
+const PREV_SNAPSHOT = {
   date: '2026-07-07', // 数据截止日期
   ly: { // 履约率数据
     '凉伞农村装维': [{name:'姚金发',iz:18,ib:0,rz:5,rb:0,sz:1,sb:0},{name:'姚鹏',iz:9,ib:0,rz:4,rb:0,sz:2,sb:0},{name:'杨斌',iz:6,ib:2,rz:10,rb:0,sz:4,sb:0},{name:'杨世增',iz:9,ib:2,rz:6,rb:0,sz:1,sb:0},{name:'杨轶杰',iz:1,ib:0,rz:4,rb:0,sz:1,sb:0},{name:'吴先锋',iz:0,ib:0,rz:0,rb:0,sz:2,sb:0}],
@@ -246,80 +290,6 @@ const CUR_SNAPSHOT = {
       {n:'秦美琼',t:3,r:'-',zw:[0, 0],gz:[0, 0],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
     ]
   }
-};
-
-// 上一次快照（7月1日-6日数据）—— 更新看板时，把CUR_SNAPSHOT的旧值复制到这里
-const PREV_SNAPSHOT = {
-  date: '2026-07-06',
-  ly: {
-    '凉伞农村装维': [
-      {name:'姚金发',iz:18,ib:0,rz:4,rb:0,sz:1,sb:0},
-      {name:'姚鹏',iz:9,ib:0,rz:4,rb:0,sz:2,sb:0},
-      {name:'杨斌',iz:4,ib:4,rz:7,rb:0,sz:4,sb:0},
-      {name:'杨世增',iz:9,ib:2,rz:6,rb:0,sz:1,sb:0},
-      {name:'杨轶杰',iz:0,ib:0,rz:4,rb:0,sz:1,sb:0},
-      {name:'吴先锋',iz:0,ib:0,rz:0,rb:0,sz:2,sb:0},
-    ],
-    '禾滩农村装维': [
-      {name:'金沛',iz:7,ib:0,rz:0,rb:0,sz:11,sb:0},
-      {name:'吕明军',iz:8,ib:0,rz:0,rb:0,sz:2,sb:0},
-      {name:'张家智',iz:6,ib:0,rz:1,rb:0,sz:6,sb:0},
-      {name:'吴大芳',iz:2,ib:0,rz:5,rb:0,sz:0,sb:0},
-      {name:'姚李明',iz:12,ib:0,rz:1,rb:0,sz:2,sb:0},
-      {name:'何伟',iz:0,ib:0,rz:0,rb:0,sz:0,sb:0},
-      {name:'杨光伟',iz:0,ib:0,rz:1,rb:0,sz:0,sb:0},
-    ],
-    '城区装维': [
-      {name:'江英平',iz:34,ib:0,rz:5,rb:0,sz:1,sb:0},
-      {name:'姚应波',iz:27,ib:1,rz:5,rb:0,sz:6,sb:0},
-      {name:'廖中山',iz:25,ib:0,rz:15,rb:0,sz:9,sb:0},
-      {name:'田荣',iz:26,ib:1,rz:3,rb:0,sz:4,sb:0},
-      {name:'张道辉',iz:23,ib:2,rz:15,rb:0,sz:7,sb:0},
-      {name:'向万强',iz:19,ib:0,rz:8,rb:0,sz:9,sb:0},
-      {name:'潘思毅',iz:17,ib:0,rz:8,rb:0,sz:1,sb:0},
-      {name:'潘进',iz:17,ib:0,rz:2,rb:0,sz:2,sb:0},
-      {name:'石翔',iz:16,ib:0,rz:7,rb:0,sz:10,sb:0},
-      {name:'陈光林',iz:15,ib:0,rz:1,rb:0,sz:10,sb:0},
-      {name:'姚茂培',iz:0,ib:0,rz:4,rb:0,sz:4,sb:0},
-      {name:'胡明',iz:0,ib:0,rz:1,rb:0,sz:2,sb:0},
-    ],
-    '支撑人员': {iz:2,ib:2,rz:2,rb:0,sz:0,sb:0},
-  },
-  my: { people: [
-    // 凉伞农村装维 (t=0)
-    {n:'吴先锋',t:0,r:'-',zw:[0, 0],gz:[0, 0],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'姚金发',t:0,r:'90.00%',zw:[18, 20],gz:[3, 3],kz:[12, 13],qtz:[2, 2],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[1, 2]},
-    {n:'姚鹏',t:0,r:'100.00%',zw:[12, 12],gz:[4, 4],kz:[3, 3],qtz:[5, 5],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'杨世增',t:0,r:'85.71%',zw:[6, 7],gz:[4, 4],kz:[1, 1],qtz:[1, 1],tyy:[0, 0],bcx:[0, 0],zd:[0, 1],zsh:[0, 0],zkz:[0, 0]},
-    {n:'杨斌',t:0,r:'91.67%',zw:[11, 12],gz:[7, 8],kz:[4, 4],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'杨轶杰',t:0,r:'100.00%',zw:[3, 3],gz:[3, 3],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    // 禾滩农村装维 (t=1)
-    {n:'何伟',t:1,r:'100.00%',zw:[1, 1],gz:[1, 1],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'吕明军',t:1,r:'100.00%',zw:[8, 8],gz:[0, 0],kz:[6, 6],qtz:[1, 1],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[1, 1]},
-    {n:'吴大芳',t:1,r:'100.00%',zw:[7, 7],gz:[5, 5],kz:[1, 1],qtz:[1, 1],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'姚李明',t:1,r:'100.00%',zw:[8, 8],gz:[0, 0],kz:[7, 7],qtz:[1, 1],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'张家智',t:1,r:'100.00%',zw:[1, 1],gz:[1, 1],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'杨光伟',t:1,r:'100.00%',zw:[1, 1],gz:[1, 1],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'金沛',t:1,r:'100.00%',zw:[9, 9],gz:[0, 0],kz:[7, 7],qtz:[2, 2],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    // 城区装维 (t=2)
-    {n:'向万强',t:2,r:'84.21%',zw:[16, 19],gz:[4, 6],kz:[7, 7],qtz:[4, 4],tyy:[0, 0],bcx:[0, 0],zd:[1, 2],zsh:[0, 0],zkz:[0, 0]},
-    {n:'姚应波',t:2,r:'92.59%',zw:[25, 27],gz:[3, 3],kz:[17, 17],qtz:[2, 2],tyy:[0, 0],bcx:[0, 0],zd:[1, 2],zsh:[0, 0],zkz:[2, 3]},
-    {n:'姚茂培',t:2,r:'100.00%',zw:[3, 3],gz:[3, 3],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'廖中山',t:2,r:'97.73%',zw:[43, 44],gz:[15, 15],kz:[17, 17],qtz:[7, 8],tyy:[0, 0],bcx:[0, 0],zd:[2, 2],zsh:[0, 0],zkz:[2, 2]},
-    {n:'张道辉',t:2,r:'93.55%',zw:[29, 31],gz:[16, 17],kz:[6, 7],qtz:[5, 5],tyy:[0, 0],bcx:[0, 0],zd:[2, 2],zsh:[0, 0],zkz:[0, 0]},
-    {n:'江英平',t:2,r:'96.77%',zw:[30, 31],gz:[4, 5],kz:[24, 24],qtz:[2, 2],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'潘思毅',t:2,r:'100.00%',zw:[20, 20],gz:[7, 7],kz:[5, 5],qtz:[5, 5],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[3, 3]},
-    {n:'潘进',t:2,r:'87.50%',zw:[14, 16],gz:[1, 1],kz:[9, 10],qtz:[3, 3],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[1, 2]},
-    {n:'田荣',t:2,r:'90.00%',zw:[27, 30],gz:[2, 4],kz:[18, 18],qtz:[7, 8],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'石翔',t:2,r:'94.74%',zw:[18, 19],gz:[6, 7],kz:[6, 6],qtz:[5, 5],tyy:[0, 0],bcx:[0, 0],zd:[1, 1],zsh:[0, 0],zkz:[0, 0]},
-    {n:'胡明',t:2,r:'100.00%',zw:[1, 1],gz:[1, 1],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'陈光林',t:2,r:'100.00%',zw:[13, 13],gz:[2, 2],kz:[8, 8],qtz:[1, 1],tyy:[0, 0],bcx:[0, 0],zd:[1, 1],zsh:[0, 0],zkz:[1, 1]},
-    // 支撑人员 (t=3)
-    {n:'姚芳燕',t:3,r:'100.00%',zw:[1, 1],gz:[1, 1],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'张勇',t:3,r:'100.00%',zw:[1, 1],gz:[1, 1],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-    {n:'张星辰',t:3,r:'100.00%',zw:[1, 1],gz:[0, 0],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[1, 1],zkz:[0, 0]},
-    {n:'秦美琼',t:3,r:'-',zw:[0, 0],gz:[0, 0],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
-  ] }
 };
 
 // 自动算增量：当前 - 上次
@@ -516,6 +486,8 @@ const CF_DATA = [
   {date:'07-04', account:'074500000242447', firstPerson:'向万强', allPersons:'向万强, 向万强', team:'城区装维', addr:'塘湾路/柏树林村', reason:'其它', firstDate:'05-06', repeatCount:2},
   {date:'07-06', account:'HH007981404002@VOD', firstPerson:'杨世增', allPersons:'杨世增, 杨轶杰', team:'凉伞农村装维', addr:'-', reason:'LAN口插错/光猫硬件故障', firstDate:'06-24', repeatCount:4},
   {date:'07-06', account:'18075577591', firstPerson:'江英平', allPersons:'江英平', team:'城区装维', addr:'长滩村村委会', reason:'皮纤线路断/光衰大', firstDate:'05-28', repeatCount:1},
+  {date:'07-08', account:'CN430745TYKJ01981214', firstPerson:'何伟', allPersons:'何伟', team:'禾滩农村装维', addr:'是', reason:'-', firstDate:'07-04', repeatCount:1},
+  {date:'07-08', account:'HH048451179@VOD', firstPerson:'张道辉', allPersons:'张道辉', team:'城区装维', addr:'是', reason:'-', firstDate:'07-02', repeatCount:1}
 ];
 
 // 反馈数据管理
@@ -721,29 +693,31 @@ function renderCfBadges() {
 
 // ===================== 表25049 90天不含PCDN重复故障率 =====================
 const REP_DATA = [
-  {n:'姚金发',t:0,gz:5,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:5,noPcdnRate:'0.00%'},
+  {n:'吴先锋',t:0,gz:1,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:1,noPcdnRate:'0.00%'},
+  {n:'姚金发',t:0,gz:6,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:6,noPcdnRate:'0.00%'},
   {n:'姚鹏',t:0,gz:4,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:4,noPcdnRate:'0.00%'},
   {n:'杨世增',t:0,gz:6,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:6,noPcdnRate:'0.00%'},
-  {n:'杨斌',t:0,gz:10,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:10,noPcdnRate:'0.00%'},
-  {n:'杨轶杰',t:0,gz:4,cf:4,cfRate:'100.00%',cfNoPcdn:4,gzNoPcdn:4,noPcdnRate:'100.00%'},
+  {n:'杨斌',t:0,gz:12,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:12,noPcdnRate:'0.00%'},
+  {n:'杨轶杰',t:0,gz:5,cf:4,cfRate:'80.00%',cfNoPcdn:4,gzNoPcdn:5,noPcdnRate:'80.00%'},
   {n:'张勇',t:3,gz:2,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:2,noPcdnRate:'0.00%'},
-  {n:'向万强',t:2,gz:10,cf:1,cfRate:'10.00%',cfNoPcdn:1,gzNoPcdn:10,noPcdnRate:'10.00%'},
-  {n:'姚应波',t:2,gz:7,cf:1,cfRate:'14.29%',cfNoPcdn:0,gzNoPcdn:6,noPcdnRate:'0.00%'},
+  {n:'向万强',t:2,gz:11,cf:1,cfRate:'9.09%',cfNoPcdn:1,gzNoPcdn:11,noPcdnRate:'9.09%'},
+  {n:'姚应波',t:2,gz:10,cf:1,cfRate:'10.00%',cfNoPcdn:0,gzNoPcdn:7,noPcdnRate:'0.00%'},
   {n:'姚茂培',t:2,gz:4,cf:3,cfRate:'75.00%',cfNoPcdn:3,gzNoPcdn:4,noPcdnRate:'75.00%'},
-  {n:'廖中山',t:2,gz:16,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:15,noPcdnRate:'0.00%'},
-  {n:'张道辉',t:2,gz:17,cf:1,cfRate:'5.88%',cfNoPcdn:1,gzNoPcdn:17,noPcdnRate:'5.88%'},
-  {n:'江英平',t:2,gz:7,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:6,noPcdnRate:'0.00%'},
+  {n:'廖中山',t:2,gz:20,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:19,noPcdnRate:'0.00%'},
+  {n:'张道辉',t:2,gz:20,cf:1,cfRate:'5.00%',cfNoPcdn:1,gzNoPcdn:20,noPcdnRate:'5.00%'},
+  {n:'江英平',t:2,gz:9,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:8,noPcdnRate:'0.00%'},
   {n:'潘思毅',t:2,gz:9,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:8,noPcdnRate:'0.00%'},
   {n:'潘进',t:2,gz:2,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:2,noPcdnRate:'0.00%'},
-  {n:'田荣',t:2,gz:5,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:5,noPcdnRate:'0.00%'},
-  {n:'石翔',t:2,gz:6,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:6,noPcdnRate:'0.00%'},
+  {n:'田荣',t:2,gz:6,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:6,noPcdnRate:'0.00%'},
+  {n:'石翔',t:2,gz:7,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:7,noPcdnRate:'0.00%'},
+  {n:'胡明',t:2,gz:3,cf:1,cfRate:'33.33%',cfNoPcdn:1,gzNoPcdn:2,noPcdnRate:'50.00%'},
   {n:'陈光林',t:2,gz:2,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:2,noPcdnRate:'0.00%'},
   {n:'杨光伟',t:1,gz:1,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:1,noPcdnRate:'0.00%'},
-  {n:'吴大芳',t:1,gz:5,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:5,noPcdnRate:'0.00%'},
+  {n:'吴大芳',t:1,gz:6,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:6,noPcdnRate:'0.00%'},
+  {n:'姚李明',t:1,gz:2,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:2,noPcdnRate:'0.00%'},
   {n:'张家智',t:1,gz:1,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:1,noPcdnRate:'0.00%'},
   {n:'姚芳燕',t:3,gz:1,cf:0,cfRate:'0.00%',cfNoPcdn:0,gzNoPcdn:1,noPcdnRate:'0.00%'},
-  {n:'秦美琼',t:3,gz:2,cf:1,cfRate:'50.00%',cfNoPcdn:1,gzNoPcdn:2,noPcdnRate:'50.00%'},
-  {n:'胡明',t:2,gz:3,cf:1,cfRate:'33.33%',cfNoPcdn:1,gzNoPcdn:2,noPcdnRate:'50.00%'}
+  {n:'秦美琼',t:3,gz:2,cf:1,cfRate:'50.00%',cfNoPcdn:1,gzNoPcdn:2,noPcdnRate:'50.00%'}
 ];
 const TEAM_NAMES_AB = ['凉伞农村装维','禾滩农村装维','城区装维','支撑人员'];
 const TEAM_COLORS_AB = ['c1','c2','c3','c4'];
