@@ -298,9 +298,18 @@ Object.keys(CUR_SNAPSHOT.ly).forEach(team => {
 
 // ===================== 十分满意率看板（表2502F）=====================
 const MY2502F = CUR_SNAPSHOT.my.people;
+const MY_PREV = PREV_SNAPSHOT.my.people;
 const MY_TEAMS_2502F = ['凉伞农村装维','禾滩农村装维','城区装维','支撑人员'];
 let expandExtra = false;
 function n10(a){return a[1]-a[0]} // 非十分满意 = 分母 - 分子
+function dn10(cur,prev,key){
+  // 非十分满意的增量 = (cur分母-cur分子) - (prev分母-prev分子)
+  const cN=cur[key][1]-cur[key][0], pN=prev[key][1]-prev[key][0];
+  return cN-pN;
+}
+function findPrev(name){
+  return MY_PREV.find(p=>p.n===name)||null;
+}
 function n10c(a){
   if(a[1]===0) return '<span style="color:#ccc">-</span>';
   const v=n10(a);
@@ -316,21 +325,35 @@ function toggleExtraCols(){
 (function buildMY(){
   const colors=['c1','c2','c3','c4'];
   let tZwFz=0,tZwFm=0,tGzN=0,tKzN=0,tQtzN=0,tSup=0;
+  // 增量
+  let dGzN=0,dKzN=0,dQtzN=0,dSup=0,dTotalN=0;
   MY2502F.forEach(p=>{
     tZwFz+=p.zw[0];tZwFm+=p.zw[1];tGzN+=n10(p.gz);tKzN+=n10(p.kz);tQtzN+=n10(p.qtz);
     tSup+=n10(p.tyy)+n10(p.bcx)+n10(p.zd)+n10(p.zsh)+n10(p.zkz);
+    const pp=findPrev(p.n);
+    if(pp){
+      dGzN+=dn10(p,pp,'gz');dKzN+=dn10(p,pp,'kz');dQtzN+=dn10(p,pp,'qtz');
+      dSup+=dn10(p,pp,'tyy')+dn10(p,pp,'bcx')+dn10(p,pp,'zd')+dn10(p,pp,'zsh')+dn10(p,pp,'zkz');
+    }
   });
   const totalN=tZwFm-tZwFz;
+  // 计算总增量
+  const prevTotalZwFz=MY_PREV.reduce((s,p)=>s+p.zw[0],0);
+  const prevTotalZwFm=MY_PREV.reduce((s,p)=>s+p.zw[1],0);
+  const prevTotalN=prevTotalZwFm-prevTotalZwFz;
+  dTotalN=totalN-prevTotalN;
   const overallR=tZwFm>0?(tZwFz/tZwFm*100).toFixed(2)+'%':'-';
   const mainN=tGzN+tKzN+tQtzN;
+  const dMainN=dGzN+dKzN+dQtzN;
+  function deltaTag(v){return v>0?' <span style="color:#d93025;font-size:12px">+'+v+'</span>':v<0?' <span style="color:#1e8e3e;font-size:12px">'+v+'</span>':'';}
   document.getElementById('sum-my').innerHTML=`
     <div class="s-card blue"><div class="lb">装维人员</div><div class="vl">${MY2502F.length}<span style="font-size:13px;color:#999">人</span></div></div>
     <div class="s-card gray"><div class="lb">装维工单量</div><div class="vl">${tZwFm}</div></div>
-    <div class="s-card red"><div class="lb">非十分满意</div><div class="vl">${totalN}</div></div>
+    <div class="s-card red"><div class="lb">非十分满意</div><div class="vl">${totalN}${deltaTag(dTotalN)}</div></div>
     <div class="s-card green"><div class="lb">综合10分满意率</div><div class="vl">${overallR}</div></div>
-    <div class="s-card orange"><div class="lb">故障非十分</div><div class="vl">${tGzN}</div></div>
-    <div class="s-card orange"><div class="lb">开通非十分</div><div class="vl">${tKzN}</div></div>
-    <div class="s-card ${tSup>0?'orange':'gray'}"><div class="lb">支撑/政企/云眼非十分</div><div class="vl">${tSup}</div></div>`;
+    <div class="s-card orange"><div class="lb">故障非十分</div><div class="vl">${tGzN}${deltaTag(dGzN)}</div></div>
+    <div class="s-card orange"><div class="lb">开通非十分</div><div class="vl">${tKzN}${deltaTag(dKzN)}</div></div>
+    <div class="s-card ${tSup>0?'orange':'gray'}"><div class="lb">支撑/政企/云眼非十分</div><div class="vl">${tSup}${deltaTag(dSup)}</div></div>`;
   const box=document.getElementById('teams-my');
   box.innerHTML='<button id="toggle-extra" onclick="toggleExtraCols()" style="background:#1a73e8;color:#fff;border:none;border-radius:6px;padding:8px 16px;margin-bottom:10px;cursor:pointer;font-size:13px">展开支撑/政企/云眼详情</button>';
   function rc(r){if(r==='-'||r==='0.00%')return r;const v=parseFloat(r);if(v>=100)return'<span class="ok-cell">'+r+'</span>';if(v>=90)return'<span class="orange-cell">'+r+'</span>';return'<span class="warn-cell">'+r+'</span>'}
@@ -349,18 +372,28 @@ function toggleExtraCols(){
     h+=`<th>装维工单10分满意率</th><th>工单量(10分/总)</th>`;
     h+=`<th>故障非十分</th><th>开通非十分</th><th>其他装非十分</th>`;
     h+=`<th class="ex-th" style="display:${ed}">天翼云眼</th><th class="ex-th" style="display:${ed}">支撑不满意修复</th><th class="ex-th" style="display:${ed}">支撑主动/前后</th><th class="ex-th" style="display:${ed}">政企售后</th><th class="ex-th" style="display:${ed}">政企开通</th>`;
-    h+=`<th>支撑/政企/云眼</th><th>非十分合计</th>`;
+    h+=`<th>支撑/政企/云眼</th><th>非十分合计</th><th style="color:#d93025">昨日新增</th>`;
     h+=`</tr></thead><tbody>`;
     members.forEach(p=>{
       const pN=n10(p.zw),pSup=n10(p.tyy)+n10(p.bcx)+n10(p.zd)+n10(p.zsh)+n10(p.zkz);
+      const pp=findPrev(p.n);
+      let dP=0,dGz=0,dKz=0,dQtz=0,dSp=0;
+      if(pp){
+        dGz=dn10(p,pp,'gz');dKz=dn10(p,pp,'kz');dQtz=dn10(p,pp,'qtz');
+        dSp=dn10(p,pp,'tyy')+dn10(p,pp,'bcx')+dn10(p,pp,'zd')+dn10(p,pp,'zsh')+dn10(p,pp,'zkz');
+        const ppN=n10(pp.zw);dP=pN-ppN;
+      }
+      const dTotal=dGz+dKz+dQtz+dSp;
+      function dt(v){return v>0?'<span style="color:#d93025;font-weight:600">+'+v+'</span>':v<0?'<span style="color:#1e8e3e">'+v+'</span>':'<span style="color:#ccc">0</span>';}
       h+=`<tr${ti===3?' class="support-row"':''}>`;
       h+=`<td class="nm">${p.n}</td>`;
       h+=`<td class="rt ${rcls(p.r)}">${rc(p.r)}</td>`;
       h+=`<td>${p.zw[0]}/${p.zw[1]}</td>`;
-      h+=`<td>${n10c(p.gz)}</td><td>${n10c(p.kz)}</td><td>${n10c(p.qtz)}</td>`;
+      h+=`<td>${n10c(p.gz)}${dGz?dt(dGz):''}</td><td>${n10c(p.kz)}${dKz?dt(dKz):''}</td><td>${n10c(p.qtz)}${dQtz?dt(dQtz):''}</td>`;
       h+=`<td class="ex-col" style="display:${ed}">${n10c(p.tyy)}</td><td class="ex-col" style="display:${ed}">${n10c(p.bcx)}</td><td class="ex-col" style="display:${ed}">${n10c(p.zd)}</td><td class="ex-col" style="display:${ed}">${n10c(p.zsh)}</td><td class="ex-col" style="display:${ed}">${n10c(p.zkz)}</td>`;
       h+=`<td>${pSup>0?'<span class="nc">'+pSup+'</span>':'<span style="color:#ccc">0</span>'}</td>`;
-      h+=`<td class="rt ${pN>0?'warn':'ok'}">${pN}</td></tr>`;
+      h+=`<td class="rt ${pN>0?'warn':'ok'}">${pN}</td>`;
+      h+=`<td style="text-align:center;font-weight:600">${dTotal>0?'<span style="color:#d93025">+'+dTotal+'</span>':dTotal<0?'<span style="color:#1e8e3e">'+dTotal+'</span>':'<span style="color:#ccc">0</span>'}</td></tr>`;
     });
     h+=`<tr class="sub-row"><td class="nm">小计</td>`;
     h+=`<td class="rt ${rcls(sR)}">${rc(sR)}</td><td>${sZf}/${sZm}</td>`;
@@ -373,7 +406,12 @@ function toggleExtraCols(){
     h+=`<td class="ex-col" style="display:${ed}">${sZsh>0?'<span class="nc">'+sZsh+'</span>':'<span style="color:#ccc">0</span>'}</td>`;
     h+=`<td class="ex-col" style="display:${ed}">${sZkz>0?'<span class="nc">'+sZkz+'</span>':'<span style="color:#ccc">0</span>'}</td>`;
     h+=`<td>${sSup>0?'<span class="nc">'+sSup+'</span>':'<span style="color:#ccc">0</span>'}</td>`;
-    h+=`<td class="rt ${sN>0?'warn':'ok'}">${sN}</td></tr>`;
+    h+=`<td class="rt ${sN>0?'warn':'ok'}">${sN}</td>`;
+    // 小计增量
+    let sDGz=0,sDKz=0,sDQtz=0,sDSup=0;
+    members.forEach(p=>{const pp=findPrev(p.n);if(pp){sDGz+=dn10(p,pp,'gz');sDKz+=dn10(p,pp,'kz');sDQtz+=dn10(p,pp,'qtz');sDSup+=dn10(p,pp,'tyy')+dn10(p,pp,'bcx')+dn10(p,pp,'zd')+dn10(p,pp,'zsh')+dn10(p,pp,'zkz');}});
+    const sDTotal=sDGz+sDKz+sDQtz+sDSup;
+    h+=`<td style="text-align:center;font-weight:600">${sDTotal>0?'<span style="color:#d93025">+'+sDTotal+'</span>':sDTotal<0?'<span style="color:#1e8e3e">'+sDTotal+'</span>':'<span style="color:#ccc">0</span>'}</td></tr>`;
     h+=`</tbody></table></div></div>`;
     box.innerHTML+=h;
   });
