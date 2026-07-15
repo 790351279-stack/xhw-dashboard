@@ -206,6 +206,50 @@ function dlPct(v) {
 // 当前累计数据（7月1日-8日）—— 每天取数后更新此区域
 // 增量由下方PREV_SNAPSHOT自动计算，不需要手动填
 const CUR_SNAPSHOT = {
+  date: '2026-07-14', // 数据截止日期
+  ly: { // 履约率数据
+    '凉伞农村装维': [{name:'吴先锋',iz:21,ib:0,rz:3,rb:0,sz:11,sb:1},{name:'姚金发',iz:40,ib:1,rz:8,rb:0,sz:6,sb:0},{name:'姚鹏',iz:22,ib:3,rz:11,rb:1,sz:12,sb:0},{name:'杨世增',iz:19,ib:5,rz:8,rb:0,sz:7,sb:0},{name:'杨斌',iz:18,ib:4,rz:18,rb:0,sz:0,sb:0},{name:'杨轶杰',iz:2,ib:0,rz:9,rb:0,sz:3,sb:0}],
+    '禾滩农村装维': [{name:'何伟',iz:1,ib:0,rz:2,rb:0,sz:5,sb:0},{name:'吕明军',iz:35,ib:3,rz:0,rb:0,sz:4,sb:0},{name:'吴大芳',iz:9,ib:0,rz:9,rb:0,sz:4,sb:0},{name:'姚李明',iz:19,ib:0,rz:7,rb:0,sz:6,sb:1},{name:'张家智',iz:15,ib:0,rz:3,rb:0,sz:13,sb:0},{name:'杨光伟',iz:0,ib:0,rz:1,rb:0,sz:0,sb:0},{name:'金沛',iz:13,ib:0,rz:5,rb:0,sz:21,sb:0}],
+    '城区装维': [{name:'向万强',iz:37,ib:1,rz:25,rb:0,sz:25,sb:0},{name:'姚应波',iz:40,ib:3,rz:19,rb:0,sz:18,sb:1},{name:'姚茂培',iz:0,ib:0,rz:6,rb:0,sz:18,sb:0},{name:'廖中山',iz:60,ib:5,rz:33,rb:0,sz:18,sb:0},{name:'张道辉',iz:50,ib:2,rz:30,rb:0,sz:33,sb:0},{name:'江英平',iz:74,ib:3,rz:17,rb:0,sz:8,sb:0},{name:'潘思毅',iz:27,ib:0,rz:19,rb:0,sz:6,sb:0},{name:'潘进',iz:41,ib:2,rz:4,rb:0,sz:11,sb:0},{name:'田荣',iz:45,ib:7,rz:11,rb:0,sz:12,sb:0},{name:'石翔',iz:32,ib:0,rz:12,rb:0,sz:21,sb:0},{name:'胡明',iz:2,ib:0,rz:4,rb:2,sz:1,sb:0},{name:'陈光林',iz:36,ib:3,rz:11,rb:0,sz:21,sb:1}],
+    '支撑人员': {iz:3,ib:3,rz:2,rb:0,sz:1,sb:0}
+  },
+  my: { // 表2502F 十分满意率数据
+    people: [
+      {n:'吴先锋',t:0,r:'100.00%',zw:[12, 12],gz:[2, 2],kz:[7, 7],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[2, 2],zsh:[0, 0],zkz:[1, 1]},
+      {n:'姚金发',t:0,r:'94.29%',zw:[33, 35],gz:[6, 6],kz:[19, 20],qtz:[7, 7],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[1, 2]},
+      {n:'姚鹏',t:0,r:'100.00%',zw:[27, 27],gz:[8, 8],kz:[10, 10],qtz:[9, 9],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
+      {n:'杨世增',t:0,r:'91.67%',zw:[11, 12],gz:[5, 5],kz:[3, 3],qtz:[3, 3],tyy:[0, 0],bcx:[0, 0],zd:[0, 1],zsh:[0, 0],zkz:[0, 0]},
+      {n:'杨斌',t:0,r:'86.67%',zw:[26, 30],gz:[11, 13],kz:[13, 14],qtz:[1, 2],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[1, 1]},
+      {n:'杨轶杰',t:0,r:'100.00%',zw:[8, 8],gz:[6, 6],kz:[0, 0],qtz:[1, 1],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[1, 1]},
+      {n:'张勇',t:3,r:'100.00%',zw:[1, 1],gz:[1, 1],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
+      {n:'向万强',t:2,r:'90.70%',zw:[39, 43],gz:[14, 16],kz:[13, 13],qtz:[8, 8],tyy:[0, 0],bcx:[0, 0],zd:[4, 6],zsh:[0, 0],zkz:[0, 0]},
+      {n:'姚应波',t:2,r:'93.88%',zw:[46, 49],gz:[12, 13],kz:[22, 22],qtz:[5, 5],tyy:[0, 0],bcx:[0, 0],zd:[4, 5],zsh:[0, 0],zkz:[3, 4]},
+      {n:'姚茂培',t:2,r:'100.00%',zw:[4, 4],gz:[4, 4],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
+      {n:'廖中山',t:2,r:'98.85%',zw:[86, 87],gz:[27, 27],kz:[41, 41],qtz:[10, 11],tyy:[0, 0],bcx:[0, 0],zd:[4, 4],zsh:[0, 0],zkz:[4, 4]},
+      {n:'张道辉',t:2,r:'95.83%',zw:[69, 72],gz:[26, 28],kz:[17, 18],qtz:[15, 15],tyy:[0, 0],bcx:[0, 0],zd:[11, 11],zsh:[0, 0],zkz:[0, 0]},
+      {n:'江英平',t:2,r:'97.06%',zw:[66, 68],gz:[11, 12],kz:[45, 46],qtz:[9, 9],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[1, 1]},
+      {n:'潘思毅',t:2,r:'91.89%',zw:[34, 37],gz:[17, 17],kz:[6, 7],qtz:[7, 9],tyy:[0, 0],bcx:[0, 0],zd:[1, 1],zsh:[0, 0],zkz:[3, 3]},
+      {n:'潘进',t:2,r:'94.44%',zw:[34, 36],gz:[2, 2],kz:[22, 23],qtz:[7, 7],tyy:[0, 0],bcx:[0, 0],zd:[1, 1],zsh:[0, 0],zkz:[2, 3]},
+      {n:'田荣',t:2,r:'79.55%',zw:[35, 44],gz:[4, 6],kz:[22, 27],qtz:[7, 9],tyy:[0, 0],bcx:[0, 0],zd:[1, 1],zsh:[0, 0],zkz:[1, 1]},
+      {n:'石翔',t:2,r:'93.55%',zw:[29, 31],gz:[10, 12],kz:[9, 9],qtz:[7, 7],tyy:[0, 0],bcx:[0, 0],zd:[3, 3],zsh:[0, 0],zkz:[0, 0]},
+      {n:'胡明',t:2,r:'100.00%',zw:[5, 5],gz:[2, 2],kz:[2, 2],qtz:[0, 0],tyy:[0, 0],bcx:[1, 1],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
+      {n:'陈光林',t:2,r:'100.00%',zw:[29, 29],gz:[11, 11],kz:[11, 11],qtz:[5, 5],tyy:[0, 0],bcx:[0, 0],zd:[1, 1],zsh:[0, 0],zkz:[1, 1]},
+      {n:'杨光伟',t:1,r:'100.00%',zw:[1, 1],gz:[1, 1],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
+      {n:'何伟',t:1,r:'100.00%',zw:[2, 2],gz:[2, 2],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
+      {n:'吕明军',t:1,r:'100.00%',zw:[30, 30],gz:[0, 0],kz:[18, 18],qtz:[7, 7],tyy:[0, 0],bcx:[0, 0],zd:[1, 1],zsh:[0, 0],zkz:[4, 4]},
+      {n:'吴大芳',t:1,r:'100.00%',zw:[15, 15],gz:[9, 9],kz:[4, 4],qtz:[2, 2],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
+      {n:'姚李明',t:1,r:'95.24%',zw:[20, 21],gz:[5, 5],kz:[10, 10],qtz:[4, 5],tyy:[0, 0],bcx:[0, 0],zd:[1, 1],zsh:[0, 0],zkz:[0, 0]},
+      {n:'张家智',t:1,r:'100.00%',zw:[8, 8],gz:[2, 2],kz:[2, 2],qtz:[4, 4],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
+      {n:'金沛',t:1,r:'100.00%',zw:[12, 12],gz:[3, 3],kz:[7, 7],qtz:[2, 2],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
+      {n:'姚芳燕',t:3,r:'100.00%',zw:[1, 1],gz:[1, 1],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
+      {n:'秦美琼',t:3,r:'-',zw:[0, 0],gz:[0, 0],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
+      {n:'张星辰',t:3,r:'100.00%',zw:[3, 3],gz:[0, 0],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[2, 2],zkz:[1, 1]}
+    ]
+  }
+};
+
+// 上一次快照（7月1日-7日数据）—— 更新看板时，把CUR_SNAPSHOT的旧值复制到这里
+const PREV_SNAPSHOT = {
   date: '2026-07-13', // 数据截止日期
   ly: { // 履约率数据
     '凉伞农村装维': [{name:'吴先锋',iz:21,ib:0,rz:3,rb:0,sz:10,sb:0},{name:'姚金发',iz:35,ib:1,rz:7,rb:0,sz:6,sb:0},{name:'姚鹏',iz:22,ib:3,rz:10,rb:1,sz:12,sb:0},{name:'杨世增',iz:19,ib:5,rz:7,rb:0,sz:5,sb:0},{name:'杨斌',iz:16,ib:4,rz:17,rb:0,sz:0,sb:0},{name:'杨轶杰',iz:2,ib:0,rz:9,rb:0,sz:3,sb:0}],
@@ -244,22 +288,6 @@ const CUR_SNAPSHOT = {
       {n:'姚芳燕',t:3,r:'100.00%',zw:[1, 1],gz:[1, 1],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
       {n:'秦美琼',t:3,r:'-',zw:[0, 0],gz:[0, 0],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[0, 0],zkz:[0, 0]},
       {n:'张星辰',t:3,r:'100.00%',zw:[3, 3],gz:[0, 0],kz:[0, 0],qtz:[0, 0],tyy:[0, 0],bcx:[0, 0],zd:[0, 0],zsh:[2, 2],zkz:[1, 1]}
-    ]
-  }
-};
-
-// 上一次快照（7月1日-7日数据）—— 更新看板时，把CUR_SNAPSHOT的旧值复制到这里
-const PREV_SNAPSHOT = {
-  date: '2026-07-12', // 数据截止日期
-  ly: { // 履约率数据
-    '凉伞农村装维': [{name:'姚金发',iz:35,ib:1,rz:7,rb:0,sz:6,sb:0},{name:'姚鹏',iz:22,ib:3,rz:10,rb:1,sz:12,sb:0},{name:'杨斌',iz:10,ib:4,rz:16,rb:0,sz:6,sb:0},{name:'杨世增',iz:15,ib:4,rz:7,rb:0,sz:3,sb:0},{name:'杨轶杰',iz:2,ib:0,rz:9,rb:0,sz:3,sb:0},{name:'吴先锋',iz:18,ib:0,rz:3,rb:0,sz:8,sb:0}],
-    '禾滩农村装维': [{name:'金沛',iz:10,ib:0,rz:4,rb:0,sz:17,sb:0},{name:'吕明军',iz:19,ib:3,rz:0,rb:0,sz:4,sb:0},{name:'张家智',iz:15,ib:0,rz:3,rb:0,sz:13,sb:0},{name:'吴大芳',iz:9,ib:0,rz:9,rb:0,sz:4,sb:0},{name:'姚李明',iz:19,ib:0,rz:5,rb:0,sz:6,sb:1},{name:'何伟',iz:0,ib:0,rz:1,rb:0,sz:5,sb:0},{name:'杨光伟',iz:0,ib:0,rz:1,rb:0,sz:0,sb:0}],
-    '城区装维': [{name:'江英平',iz:52,ib:3,rz:15,rb:0,sz:8,sb:0},{name:'姚应波',iz:40,ib:3,rz:16,rb:0,sz:17,sb:1},{name:'廖中山',iz:55,ib:5,rz:30,rb:0,sz:17,sb:0},{name:'田荣',iz:44,ib:7,rz:9,rb:0,sz:10,sb:0},{name:'张道辉',iz:46,ib:2,rz:26,rb:0,sz:30,sb:0},{name:'向万强',iz:29,ib:0,rz:22,rb:0,sz:21,sb:0},{name:'潘思毅',iz:25,ib:0,rz:15,rb:0,sz:4,sb:0},{name:'潘进',iz:31,ib:0,rz:3,rb:0,sz:6,sb:0},{name:'石翔',iz:26,ib:0,rz:10,rb:0,sz:17,sb:0},{name:'陈光林',iz:28,ib:3,rz:9,rb:0,sz:19,sb:1},{name:'姚茂培',iz:0,ib:0,rz:5,rb:0,sz:18,sb:0},{name:'胡明',iz:2,ib:0,rz:4,rb:2,sz:3,sb:0}],
-    '支撑人员': {iz:3,ib:3,rz:2,rb:0,sz:0,sb:0},
-  },
-  my: { // 表2502F 十分满意率数据
-    people: [
-      {n:'姚金发',t:0,r:'93.55%',zw:[29,31],gz:[5,5],kz:[17,18],qtz:[6,6],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[1,2]},{n:'姚鹏',t:0,r:'100.00%',zw:[22,22],gz:[8,8],kz:[7,7],qtz:[7,7],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},{n:'杨斌',t:0,r:'81.82%',zw:[18,22],gz:[9,11],kz:[7,8],qtz:[1,2],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[1,1]},{n:'杨世增',t:0,r:'90.91%',zw:[10,11],gz:[4,4],kz:[3,3],qtz:[3,3],tyy:[0,0],bcx:[0,0],zd:[0,1],zsh:[0,0],zkz:[0,0]},{n:'杨轶杰',t:0,r:'100.00%',zw:[8,8],gz:[6,6],kz:[0,0],qtz:[1,1],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[1,1]},{n:'吴先锋',t:0,r:'100.00%',zw:[9,9],gz:[2,2],kz:[5,5],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[2,2],zsh:[0,0],zkz:[0,0]},{n:'金沛',t:1,r:'100.00%',zw:[11,11],gz:[2,2],kz:[7,7],qtz:[2,2],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},{n:'吕明军',t:1,r:'100.00%',zw:[20,20],gz:[0,0],kz:[12,12],qtz:[4,4],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[4,4]},{n:'张家智',t:1,r:'100.00%',zw:[6,6],gz:[2,2],kz:[1,1],qtz:[3,3],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},{n:'吴大芳',t:1,r:'100.00%',zw:[15,15],gz:[9,9],kz:[4,4],qtz:[2,2],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},{n:'姚李明',t:1,r:'94.74%',zw:[18,19],gz:[3,3],kz:[10,10],qtz:[4,5],tyy:[0,0],bcx:[0,0],zd:[1,1],zsh:[0,0],zkz:[0,0]},{n:'何伟',t:1,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},{n:'杨光伟',t:1,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},{n:'江英平',t:2,r:'96.15%',zw:[50,52],gz:[10,11],kz:[34,35],qtz:[5,5],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[1,1]},{n:'姚应波',t:2,r:'93.75%',zw:[45,48],gz:[11,12],kz:[22,22],qtz:[5,5],tyy:[0,0],bcx:[0,0],zd:[4,5],zsh:[0,0],zkz:[3,4]},{n:'廖中山',t:2,r:'98.73%',zw:[78,79],gz:[24,24],kz:[39,39],qtz:[8,9],tyy:[0,0],bcx:[0,0],zd:[4,4],zsh:[0,0],zkz:[3,3]},{n:'田荣',t:2,r:'79.55%',zw:[35,44],gz:[4,6],kz:[22,27],qtz:[7,9],tyy:[0,0],bcx:[0,0],zd:[1,1],zsh:[0,0],zkz:[1,1]},{n:'张道辉',t:2,r:'96.67%',zw:[58,60],gz:[22,23],kz:[15,16],qtz:[12,12],tyy:[0,0],bcx:[0,0],zd:[9,9],zsh:[0,0],zkz:[0,0]},{n:'向万强',t:2,r:'88.89%',zw:[32,36],gz:[12,14],kz:[12,12],qtz:[6,6],tyy:[0,0],bcx:[0,0],zd:[2,4],zsh:[0,0],zkz:[0,0]},{n:'潘思毅',t:2,r:'100.00%',zw:[30,30],gz:[14,14],kz:[6,6],qtz:[7,7],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[3,3]},{n:'潘进',t:2,r:'93.55%',zw:[29,31],gz:[1,1],kz:[19,20],qtz:[7,7],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[2,3]},{n:'石翔',t:2,r:'96.55%',zw:[28,29],gz:[9,10],kz:[9,9],qtz:[7,7],tyy:[0,0],bcx:[0,0],zd:[3,3],zsh:[0,0],zkz:[0,0]},{n:'陈光林',t:2,r:'100.00%',zw:[26,26],gz:[9,9],kz:[11,11],qtz:[4,4],tyy:[0,0],bcx:[0,0],zd:[1,1],zsh:[0,0],zkz:[1,1]},{n:'姚茂培',t:2,r:'100.00%',zw:[3,3],gz:[3,3],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},{n:'胡明',t:2,r:'100.00%',zw:[4,4],gz:[2,2],kz:[2,2],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},{n:'张勇',t:3,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},{n:'姚芳燕',t:3,r:'100.00%',zw:[1,1],gz:[1,1],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},{n:'秦美琼',t:3,r:'-',zw:[0,0],gz:[0,0],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[0,0],zkz:[0,0]},{n:'张星辰',t:3,r:'100.00%',zw:[3,3],gz:[0,0],kz:[0,0],qtz:[0,0],tyy:[0,0],bcx:[0,0],zd:[0,0],zsh:[2,2],zkz:[1,1]}
     ]
   }
 };;
@@ -354,8 +382,35 @@ function toggleExtraCols(){
     <div class="s-card orange"><div class="lb">故障非十分</div><div class="vl">${tGzN}${deltaTag(dGzN)}</div></div>
     <div class="s-card orange"><div class="lb">开通非十分</div><div class="vl">${tKzN}${deltaTag(dKzN)}</div></div>
     <div class="s-card ${tSup>0?'orange':'gray'}"><div class="lb">支撑/政企/云眼非十分</div><div class="vl">${tSup}${deltaTag(dSup)}</div></div>`;
+
+  // ====== 非十分满意TOP5黑榜 ======
+  const myAllPeople=MY2502F.map(p=>({...p,n10total:n10(p.zw)})).filter(p=>p.n10total>0);
+  myAllPeople.sort((a,b)=>b.n10total-a.n10total);
+  const myTop5=myAllPeople.slice(0,5);
+  const tNameMap={0:'凉伞',1:'禾滩',2:'城区',3:'支撑'};
+  let myTopH='<div style="margin:12px 0;padding:14px 18px;background:linear-gradient(135deg,#fff5f5,#ffe0e0);border-radius:10px;border:1px solid #f5c6c6">';
+  myTopH+='<div style="font-size:16px;font-weight:700;color:#d93025;margin-bottom:10px">&#128083; 非十分满意TOP5黑榜</div>';
+  myTop5.forEach((p,i)=>{
+    const barW=Math.min(p.n10total/10*100,100);
+    const tags=[];
+    const gzN=n10(p.gz),kzN=n10(p.kz),qtzN=n10(p.qtz),supN=n10(p.tyy)+n10(p.bcx)+n10(p.zd)+n10(p.zsh)+n10(p.zkz);
+    if(gzN>0)tags.push('故障'+gzN);if(kzN>0)tags.push('开通'+kzN);if(qtzN>0)tags.push('其他'+qtzN);if(supN>0)tags.push('支撑'+supN);
+    myTopH+=`<div style="display:flex;align-items:center;margin:6px 0;gap:8px">`;
+    myTopH+=`<span style="width:22px;height:22px;border-radius:50%;background:${i<3?'#d93025':'#f9ab00'};color:#fff;text-align:center;line-height:22px;font-size:12px;font-weight:700;flex-shrink:0">${i+1}</span>`;
+    myTopH+=`<span style="min-width:56px;font-weight:600;font-size:14px">${p.n}</span>`;
+    myTopH+=`<span style="font-size:12px;color:#666;min-width:40px">${tNameMap[p.t]||''}</span>`;
+    myTopH+=`<div style="flex:1;height:18px;background:#fdd;border-radius:9px;overflow:hidden;min-width:60px"><div style="width:${barW}%;height:100%;background:${i<3?'#d93025':'#f9ab00'};border-radius:9px;transition:width .3s"></div></div>`;
+    myTopH+=`<span style="font-weight:700;color:#d93025;min-width:24px">${p.n10total}单</span>`;
+    myTopH+=`<span style="font-size:12px;color:#999">${tags.join(' ')}</span>`;
+    myTopH+=`</div>`;
+  });
+  if(myTop5.length===0)myTopH+='<div style="color:#1e8e3e;font-weight:600">全员十分满意！</div>';
+  myTopH+='</div>';
+
   const box=document.getElementById('teams-my');
-  box.innerHTML='<button id="toggle-extra" onclick="toggleExtraCols()" style="background:#1a73e8;color:#fff;border:none;border-radius:6px;padding:8px 16px;margin-bottom:10px;cursor:pointer;font-size:13px">展开支撑/政企/云眼详情</button>';
+  box.innerHTML=myTopH;
+
+  box.innerHTML+='<button id="toggle-extra" onclick="toggleExtraCols()" style="background:#1a73e8;color:#fff;border:none;border-radius:6px;padding:8px 16px;margin-bottom:10px;cursor:pointer;font-size:13px">展开支撑/政企/云眼详情</button>';
   function rc(r){if(r==='-'||r==='0.00%')return r;const v=parseFloat(r);if(v>=100)return'<span class="ok-cell">'+r+'</span>';if(v>=90)return'<span class="orange-cell">'+r+'</span>';return'<span class="warn-cell">'+r+'</span>'}
   function rcls(r){if(r==='-'||r==='0.00%')return'';const v=parseFloat(r);if(v>=100)return'ok';if(v>=90)return'orange';return'warn'}
   MY_TEAMS_2502F.forEach((tn,ti)=>{
@@ -446,6 +501,32 @@ function toggleExtraCols(){
     <div class="s-card red"><div class="lb">不履约</div><div class="vl">${allB}${dl(allDB,true)}</div></div>
     <div class="s-card green"><div class="lb">综合履约率</div><div class="vl">${allRate}${dlPct(rateDelta)}</div></div>
   `;
+
+  // ====== 不履约TOP5黑榜 ======
+  const allPeople=[];
+  teamNames.forEach(t=>{const d=LY_DATA[t];if(Array.isArray(d))d.forEach(r=>allPeople.push({...r,team:t}));});
+  allPeople.sort((a,b)=>(b.ib+b.rb+b.sb)-(a.ib+a.rb+a.sb));
+  const top5=allPeople.slice(0,5).filter(p=>(p.ib+p.rb+p.sb)>0);
+  let topH='<div style="margin:12px 0;padding:14px 18px;background:linear-gradient(135deg,#fff5f5,#ffe0e0);border-radius:10px;border:1px solid #f5c6c6">';
+  topH+='<div style="font-size:16px;font-weight:700;color:#d93025;margin-bottom:10px">&#128083; 不履约TOP5黑榜</div>';
+  top5.forEach((p,i)=>{
+    const total=p.ib+p.rb+p.sb;
+    const barW=Math.min(total/10*100,100);
+    const tags=[];
+    if(p.ib>0)tags.push('装机'+p.ib);if(p.rb>0)tags.push('修障'+p.rb);if(p.sb>0)tags.push('支撑'+p.sb);
+    topH+=`<div style="display:flex;align-items:center;margin:6px 0;gap:8px">`;
+    topH+=`<span style="width:22px;height:22px;border-radius:50%;background:${i<3?'#d93025':'#f9ab00'};color:#fff;text-align:center;line-height:22px;font-size:12px;font-weight:700;flex-shrink:0">${i+1}</span>`;
+    topH+=`<span style="min-width:56px;font-weight:600;font-size:14px">${p.name}</span>`;
+    topH+=`<span style="font-size:12px;color:#666;min-width:80px">${p.team.replace('农村装维','').replace('装维','')}</span>`;
+    topH+=`<div style="flex:1;height:18px;background:#fdd;border-radius:9px;overflow:hidden;min-width:60px"><div style="width:${barW}%;height:100%;background:${i<3?'#d93025':'#f9ab00'};border-radius:9px;transition:width .3s"></div></div>`;
+    topH+=`<span style="font-weight:700;color:#d93025;min-width:24px">${total}单</span>`;
+    topH+=`<span style="font-size:12px;color:#999">${tags.join(' ')}</span>`;
+    topH+=`</div>`;
+  });
+  if(top5.length===0)topH+='<div style="color:#1e8e3e;font-weight:600">全员履约！</div>';
+  topH+='</div>';
+  document.getElementById('teams-ly').innerHTML=topH;
+
   const box=document.getElementById('teams-ly');
   function nc(v,dv){return (v>0?`<span class="nc">${v}</span>`:`<span class="ok">0</span>`)+dl(dv,true)}
   function rate(z,b){return z>0?((z-b)/z*100).toFixed(1)+'%':'-'}
